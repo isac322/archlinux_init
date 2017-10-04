@@ -1,9 +1,11 @@
 #!/usr/bin/env zsh
 
 print_sep() {
-	echo '###################################################################'
+	echo '###########################################################################################################'
 }
 
+sed -Ei "s/#?\W*MAKEFLAGS=.+/MAKEFLAGS=\"-j$(nproc)\"/" /etc/makepkg.conf
+timedatectl set-ntp true
 
 echo "$HOST_NAME" > /etc/hostname
 ln -sf /usr/share/zoneinfo/Asia/Seoul /etc/localtime
@@ -15,7 +17,7 @@ locales=('en_US.UTF-8' 'ko_KR.UTF-8')
 for locale in ${locales}; do
 	sed -ri "s/#(${locale}.*)/\1/" /etc/locale.gen
 done
-echo LANG=ko_KR.UTF-8 > /etc/locale.conf
+echo 'LANG=ko_KR.UTF-8' > /etc/locale.conf
 locale-gen
 
 
@@ -66,8 +68,8 @@ fi
 # install desktop
 pacman -S baobab eog eog-plugins evince gdm gnome-calculator gnome-control-center gnome-disk-utility gnome-font-viewer \
  gnome-keyring gnome-screenshot gnome-settings-daemon gnome-shell gnome-shell-extensions gnome-system-monitor \
-  gucharmap gvfs gvfs-afc gvfs-goa gvfs-google gvfs-mtp gvfs-nfs gvfs-smb mousetweaks nautilus networkmanager vino \
-  xdg-user-dirs-gtk cheese dconf-editor file-roller gedit gnome-logs gnome-mines gnome-sound-recorder gnome-todo \
+  gucharmap gvfs gvfs-afc gvfs-goa gvfs-google gvfs-mtp gvfs-nfs gvfs-smb mousetweaks nautilus networkmanager totem \
+  vino xdg-user-dirs-gtk cheese dconf-editor file-roller gedit gnome-logs gnome-mines gnome-sound-recorder gnome-todo \
   gnome-tweak-tool seahorse vinagre gparted meld ttf-ubuntu-font-family --noconfirm
 
 systemctl enable NetworkManager
@@ -95,6 +97,7 @@ systemctl enable gdm
 #37 mousetweaks
 #39 nautilus
 #40 networkmanager
+#41 totem
 #44 vino
 #45 xdg-user-dirs-gtk
 
