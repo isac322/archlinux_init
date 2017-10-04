@@ -32,7 +32,7 @@ cd ttf-nanum
 address=`zsh -c 'source PKGBUILD; echo ${source[1]}'`
 md5=`curl -s "${address}" | md5sum | awk '{print $1}'`
 sed -E "s/md5sums=\('.+'\)/md5sums=('${md5}')/" PKGBUILD
-makepkg -si
+makepkg -si --noconfirm
 cd ..
 rm -rf ttf-nanum
 
@@ -44,7 +44,7 @@ yaourt -S jre8 jdk8 zsh-completions zsh-syntax-highlighting tilix openssh adobe-
 yaourt -S google-chrome vlc slack-desktop intellij-idea-ultimate-edition clion redshift vmware-workstation \
  mendeleydesktop wine-staging winetricks --noconfirm
 
-WINEARCH=win32 winetricks gdiplus msxml6 riched30 wp9
+WINEARCH=win32 winetricks gdiplus msxml6 riched30 wmp9
 
 # etc.
 #ttf-nanum ttf-nanumgothic_coding
