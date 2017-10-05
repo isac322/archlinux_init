@@ -4,4 +4,4 @@ gsettings set org.gnome.gnome-system-monitor cpu-colors "[(0, 'rgb(239,41,41)'),
 gsettings set org.gnome.gnome-system-monitor current-tab 'processes'
 gsettings set org.gnome.gnome-system-monitor.proctree col-0-width 323
 gsettings set org.gnome.gnome-system-monitor update-interval 1000
-gsettings set org.gnome.gnome-system-monitor window-state (715, 783, 173, 133)
+gsettings set org.gnome.gnome-system-monitor window-state "(715, 783, 173, 133)"

@@ -42,17 +42,17 @@ sudo mount -o remount,size=4G /tmp
 PGP_key=`curl -s https://aur.archlinux.org/cgit/aur.git/plain/PKGBUILD\?h\=ncurses5-compat-libs | sed -En "s/validpgpkeys=\('(.+)'\).*/\1/p"`
 gpg --recv-keys ${PGP_key}
 
-yaourt -S ncurses5-compat-libs
+yaourt -S ncurses5-compat-libs --noconfirm
 
 # install packages
-yaourt -S jre8 jdk8 zsh-completions zsh-fast-syntax-highlighting-git zsh-fast-syntax-highlighting-git tilix \
+yaourt -S jre8 jdk8 zsh-completions zsh-autosuggestions zsh-fast-syntax-highlighting-git tilix \
  python2-nautilus openssh adobe-source-code-pro-fonts plank paper-icon-theme-git ttf-nanumgothic_coding --noconfirm
 
 yaourt -S google-chrome chrome-gnome-shell-git slack-desktop intellij-idea-ultimate-edition linux-headers redshift \
- mendeleydesktop wine winetricks samba rust deluge-git clion --noconfirm
+ mendeleydesktop wine winetricks samba rust deluge-git gdb clion --noconfirm
 
 
-yaourt -R clion-jre intellij-idea-ultimate-edition-jre
+yaourt -R clion-jre intellij-idea-ultimate-edition-jre clion-cmake --noconfirm
 
 
 # Flat Plat theme
@@ -76,6 +76,10 @@ fi' >> ~/.zshrc
 # WINEARCH=win32 winetricks dotnet40 gdiplus msxml6 riched30 wmp9
 # winetricks win7
 # yaourt -S vmware-workstation flatplat-theme
+
+
+# remove unused packages
+yaourt -Rsn `yaourt -Qdtq`
 
 for script in /applications/*.sh; do
     sh ${script}
