@@ -55,6 +55,12 @@ yaourt -S google-chrome chrome-gnome-shell-git slack-desktop intellij-idea-ultim
 yaourt -R clion-jre intellij-idea-ultimate-edition-jre
 
 
+# Flat Plat theme
+cd /tmp && curl -sL https://github.com/nana-4/materia-theme/archive/v20170917.tar.gz | tar xz
+cd materia-theme-20170917
+sudo ./install.sh
+
+
 # for zsh plugins
 echo 'source /usr/share/zsh/plugins/zsh-autosuggestions/zsh-autosuggestions.zsh' >> ~/.zshrc
 echo 'source /usr/share/zsh/plugins/fast-syntax-highlighting/fast-syntax-highlighting.plugin.zsh' >> ~/.zshrc
