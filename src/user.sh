@@ -7,11 +7,6 @@ curl -fsSL https://raw.githubusercontent.com/robbyrussell/oh-my-zsh/master/tools
 sed -Ei -e 's/plugins=\([^)]+\)/plugins=(git npm jsontools sudo docker pip python archlinux)/' \
  -e 's/ZSH_THEME="[^"]+"/ZSH_THEME="agnoster"/' ~/.zshrc
 
-# for tilix
-echo 'if [ $TILIX_ID ] || [ $VTE_VERSION ]; then
-        source /etc/profile.d/vte.sh
-fi' >> ~/.zshrc
-
 
 # install yaourt
 git clone https://aur.archlinux.org/package-query.git
@@ -42,17 +37,33 @@ rm -rf ttf-nanum ttf-nanum.tgz
 
 sudo mount -o remount,size=4G /tmp
 
+
+# for ncurses5-compat-libs that need to install clion
+PGP_key=`curl -s https://aur.archlinux.org/cgit/aur.git/plain/PKGBUILD\?h\=ncurses5-compat-libs | sed -En "s/validpgpkeys=\('(.+)'\).*/\1/p"`
+gpg --recv-keys ${PGP_key}
+
+yaourt -S ncurses5-compat-libs
+
 # install packages
 yaourt -S jre8 jdk8 zsh-completions zsh-fast-syntax-highlighting-git zsh-fast-syntax-highlighting-git tilix \
  python2-nautilus openssh adobe-source-code-pro-fonts plank paper-icon-theme-git ttf-nanumgothic_coding --noconfirm
 
 yaourt -S google-chrome chrome-gnome-shell-git slack-desktop intellij-idea-ultimate-edition linux-headers redshift \
- mendeleydesktop wine winetricks samba rust --noconfirm
+ mendeleydesktop wine winetricks samba rust deluge-git clion --noconfirm
+
+
+yaourt -R clion-jre intellij-idea-ultimate-edition-jre
 
 
 # for zsh plugins
 echo 'source /usr/share/zsh/plugins/zsh-autosuggestions/zsh-autosuggestions.zsh' >> ~/.zshrc
 echo 'source /usr/share/zsh/plugins/fast-syntax-highlighting/fast-syntax-highlighting.plugin.zsh' >> ~/.zshrc
+
+
+# for tilix
+echo 'if [ $TILIX_ID ] || [ $VTE_VERSION ]; then
+        source /etc/profile.d/vte.sh
+fi' >> ~/.zshrc
 
 
 # TODO: after first booting
