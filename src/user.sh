@@ -77,6 +77,6 @@ fi' >> ~/.zshrc
 # winetricks win7
 # yaourt -S vmware-workstation flatplat-theme
 
-for script in applications/*.sh; do
+for script in /applications/*.sh; do
     sh ${script}
 done
