@@ -102,4 +102,6 @@ for script in ~/configs/*.sh; do
     sh \${script}
 done
 yaourt -S vmware-workstation --noconfirm
-winecfg" > ~/init.sh
+winecfg
+rm ~/init.sh ~/.config/autostart/init.desktop
+rm -rf ~/configs" > ~/init.sh
