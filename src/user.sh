@@ -86,8 +86,10 @@ fi' >> ~/.zshrc
 
 
 # remove unused packages
-yaourt -Rsn `yaourt -Qdtq`
+yaourt -Rsn `yaourt -Qdtq` --noconfirm
 
+
+mkdir ~/.config/autostart/ -p
 
 # ready for next boot
 echo "[Desktop Entry]
@@ -104,4 +106,5 @@ done
 yaourt -S vmware-workstation --noconfirm
 winecfg
 rm ~/init.sh ~/.config/autostart/init.desktop
-rm -rf ~/configs" > ~/init.sh
+rm -rf ~/configs
+sudo grub-mkconfig -o /boot/grub/grub.cfg" > ~/init.sh
