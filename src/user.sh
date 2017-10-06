@@ -1,5 +1,7 @@
 #!/usr/bin/env sh
 
+timedatectl set-ntp true
+
 # install oh-my-zsh
 curl -fsSL https://raw.githubusercontent.com/robbyrussell/oh-my-zsh/master/tools/install.sh | sh
 
@@ -49,7 +51,12 @@ yaourt -S jre8 jdk8 zsh-completions zsh-autosuggestions zsh-fast-syntax-highligh
  python2-nautilus openssh adobe-source-code-pro-fonts plank paper-icon-theme-git ttf-nanumgothic_coding --noconfirm
 
 yaourt -S google-chrome chrome-gnome-shell-git slack-desktop intellij-idea-ultimate-edition linux-headers redshift \
- mendeleydesktop wine winetricks samba rust deluge-git gdb clion --noconfirm
+ mendeleydesktop wine winetricks samba rust deluge-git gdb clion gksu ntfs-3g --noconfirm
+
+yaourt -S gnome-shell-extension-system-monitor-git gnome-shell-extension-workspaces-to-dock-git \
+ gnome-shell-extension-topicons-plus-git gnome-shell-extension-no-topleft-hot-corner \
+ gnome-shell-extension-mediaplayer-git gnome-shell-extension-dynamic-top-bar \
+ gnome-shell-extension-autohide-battery-git --noconfirm
 
 
 yaourt -R clion-jre intellij-idea-ultimate-edition-jre clion-cmake --noconfirm
@@ -81,6 +88,18 @@ fi' >> ~/.zshrc
 # remove unused packages
 yaourt -Rsn `yaourt -Qdtq`
 
-for script in /applications/*.sh; do
-    sh ${script}
+
+# ready for next boot
+echo "[Desktop Entry]
+Name=Init
+Type=Application
+Exec=tilix -e sh /home/$USER/init.sh" > ~/.config/autostart/init.desktop
+
+cp -r /configs ~/
+
+echo "#\!/usr/bin/env sh
+for script in ~/configs/*.sh; do
+    sh \${script}
 done
+yaourt -S vmware-workstation --noconfirm
+winecfg" > ~/init.sh
