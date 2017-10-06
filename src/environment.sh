@@ -70,7 +70,15 @@ pacman -S baobab eog eog-plugins evince gdm gnome-calculator gnome-control-cente
  gnome-keyring gnome-screenshot gnome-settings-daemon gnome-shell gnome-shell-extensions gnome-system-monitor \
   gucharmap gvfs gvfs-afc gvfs-goa gvfs-google gvfs-mtp gvfs-nfs gvfs-smb mousetweaks nautilus networkmanager totem \
   vino xdg-user-dirs-gtk cheese dconf-editor file-roller gedit gnome-logs gnome-mines gnome-sound-recorder gnome-todo \
-  gnome-tweak-tool seahorse vinagre gparted meld ttf-ubuntu-font-family --noconfirm
+  gnome-tweak-tool seahorse vinagre gparted meld ttf-ubuntu-font-family fcitx-configtool fcitx-hangul fcitx-gtk3 --noconfirm
+
+# enable fcitx
+echo '#!/usr/bin/env sh
+
+export GTK_IM_MODULE=fcitx
+export QT_IM_MODULE=fcitx
+export XMODIFIERS=@im=fcitx' > /etc/X11/xinit/xinitrc.d/60-fctix.sh
+chmod +x /etc/X11/xinit/xinitrc.d/60-fctix.sh
 
 systemctl enable NetworkManager
 systemctl enable gdm

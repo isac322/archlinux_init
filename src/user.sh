@@ -99,12 +99,12 @@ Exec=tilix -e sh /home/$USER/init.sh" > ~/.config/autostart/init.desktop
 
 cp -r /configs ~/
 
-echo "#\!/usr/bin/env sh
+echo '#!/usr/bin/env sh
 for script in ~/configs/*.sh; do
-    sh \${script}
+    sh ${script}
 done
 yaourt -S vmware-workstation --noconfirm
 winecfg
 rm ~/init.sh ~/.config/autostart/init.desktop
 rm -rf ~/configs
-sudo grub-mkconfig -o /boot/grub/grub.cfg" > ~/init.sh
+sudo grub-mkconfig -o /boot/grub/grub.cfg' > ~/init.sh
