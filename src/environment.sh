@@ -30,10 +30,14 @@ print_sep
 echo 'setting password of root'
 passwd
 
+# for hibernate
+sed -Ei 's/HOOKS="(.+)udev(.+)/HOOKS="\1udev resume\2/' /etc/mkinitcpio.conf
 mkinitcpio -p linux
+
 
 pacman -S grub efibootmgr os-prober --noconfirm
 grub-install --target=x86_64-efi --efi-directory=/boot/efi --bootloader-id=archlinux
+# add useful entries to grub
 tee -a /etc/grub.d/40_custom > /dev/null << END
 
 menuentry "System shutdown" {
@@ -50,6 +54,9 @@ menuentry "Firmware setup" {
 	fwsetup
 }
 END
+# add resume point to swap partition
+SWAP_UUID=`blkid ${SWAP_PARTITION} | sed -E 's/.*UUID="(.+)".*/\1/'`
+sed -Ei "s/GRUB_CMDLINE_LINUX_DEFAULT=\"(.+)\"/GRUB_CMDLINE_LINUX_DEFAULT=\"\1 resume=UUID=${SWAP_UUID}\"/" /etc/default/grub
 grub-mkconfig -o /boot/grub/grub.cfg
 
 
