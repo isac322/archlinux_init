@@ -74,9 +74,11 @@ echo 'source /usr/share/zsh/plugins/fast-syntax-highlighting/fast-syntax-highlig
 
 
 # for tilix
-echo 'if [ $TILIX_ID ] || [ $VTE_VERSION ]; then
+tee -a ~/.zshrc > /dev/null << END
+if [ \$TILIX_ID ] || [ \$VTE_VERSION ]; then
         source /etc/profile.d/vte.sh
-fi' >> ~/.zshrc
+fi
+END
 
 
 # TODO: after first booting
@@ -92,10 +94,12 @@ yaourt -Rsn `yaourt -Qdtq` --noconfirm
 mkdir ~/.config/autostart/ -p
 
 # ready for next boot
-echo "[Desktop Entry]
+tee ~/.config/autostart/init.desktop > /dev/null << END
+[Desktop Entry]
 Name=Init
 Type=Application
-Exec=tilix -e sh /home/$USER/init.sh" > ~/.config/autostart/init.desktop
+Exec=tilix -e sh /home/$USER/init.sh
+END
 
 cp -r /configs ~/
 

@@ -1,7 +1,7 @@
 #!/usr/bin/env zsh
 
 print_sep() {
-	echo '###########################################################################################################'
+	echo '#####################################################################################################################'
 }
 
 sed -Ei "s/#?\W*MAKEFLAGS=.+/MAKEFLAGS=\"-j$(nproc)\"/" /etc/makepkg.conf
@@ -34,6 +34,22 @@ mkinitcpio -p linux
 
 pacman -S grub efibootmgr os-prober --noconfirm
 grub-install --target=x86_64-efi --efi-directory=/boot/efi --bootloader-id=archlinux
+tee -a /etc/grub.d/40_custom > /dev/null << END
+
+menuentry "System shutdown" {
+	echo "System shutting down..."
+	halt
+}
+
+menuentry "System restart" {
+	echo "System rebooting..."
+	reboot
+}
+
+menuentry "Firmware setup" {
+	fwsetup
+}
+END
 grub-mkconfig -o /boot/grub/grub.cfg
 
 
@@ -73,11 +89,13 @@ pacman -S baobab eog eog-plugins evince gdm gnome-calculator gnome-control-cente
   gnome-tweak-tool seahorse vinagre gparted meld ttf-ubuntu-font-family fcitx-configtool fcitx-hangul fcitx-gtk3 --noconfirm
 
 # enable fcitx
-echo '#!/usr/bin/env sh
+tee /etc/X11/xinit/xinitrc.d/60-fctix.sh > /dev/null << END
+#!/usr/bin/env sh
 
 export GTK_IM_MODULE=fcitx
 export QT_IM_MODULE=fcitx
-export XMODIFIERS=@im=fcitx' > /etc/X11/xinit/xinitrc.d/60-fctix.sh
+export XMODIFIERS=@im=fcitx
+END
 chmod +x /etc/X11/xinit/xinitrc.d/60-fctix.sh
 
 systemctl enable NetworkManager
