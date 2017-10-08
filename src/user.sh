@@ -48,7 +48,7 @@ yaourt -S ncurses5-compat-libs --noconfirm
 
 # install packages
 yaourt -S jre8 jdk8 zsh-completions zsh-autosuggestions zsh-fast-syntax-highlighting-git pm-utils tilix \
- python2-nautilus openssh adobe-source-code-pro-fonts plank paper-icon-theme-git ttf-nanumgothic_coding --noconfirm
+ python2-nautilus openssh adobe-source-code-pro-fonts plank paper-icon-theme-git ttf-nanumgothic_coding materia-theme --noconfirm
 
 yaourt -S google-chrome chrome-gnome-shell-git slack-desktop intellij-idea-ultimate-edition linux-headers redshift \
  mendeleydesktop wine winetricks samba rust deluge-git gdb clion gksu ntfs-3g --noconfirm
@@ -60,12 +60,6 @@ yaourt -S gnome-shell-extension-system-monitor-git gnome-shell-extension-workspa
 
 
 yaourt -R clion-jre intellij-idea-ultimate-edition-jre clion-cmake --noconfirm
-
-
-# Flat Plat theme
-cd /tmp && curl -sL https://github.com/nana-4/materia-theme/archive/v20170917.tar.gz | tar xz
-cd materia-theme-20170917
-sudo ./install.sh
 
 
 # for zsh plugins
