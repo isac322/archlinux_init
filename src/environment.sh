@@ -26,6 +26,7 @@ perl -i -0777 -pe 's/#\W*\[multilib\]\n#\W*(.+)/[multilib]\n\1/g' /etc/pacman.co
 pacman -Syu
 
 
+chsh -s `which zsh`
 print_sep
 echo 'setting password of root'
 passwd

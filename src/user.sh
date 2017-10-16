@@ -48,7 +48,8 @@ yaourt -S ncurses5-compat-libs --noconfirm
 
 # install packages
 yaourt -S jre8 jdk8 zsh-completions zsh-autosuggestions zsh-fast-syntax-highlighting-git pm-utils tilix exfat-utils \
- python2-nautilus openssh adobe-source-code-pro-fonts plank paper-icon-theme-git ttf-nanumgothic_coding materia-theme --noconfirm
+ python2-nautilus openssh adobe-source-code-pro-fonts plank paper-icon-theme-git ttf-nanumgothic_coding materia-theme \
+ powerline-fonts --noconfirm
 
 yaourt -S google-chrome chrome-gnome-shell-git slack-desktop intellij-idea-ultimate-edition linux-headers redshift \
  mendeleydesktop wine winetricks samba rust deluge-git gdb clion gksu ntfs-3g --noconfirm
