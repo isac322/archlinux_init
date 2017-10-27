@@ -1,4 +1,4 @@
-#!/usr/bin/env zsh
+#!/usr/bin/env sh
 
 HOST_NAME='bhyoo-laptop'
 USER_NAME='bhyoo'

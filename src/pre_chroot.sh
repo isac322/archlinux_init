@@ -1,23 +1,10 @@
-#!/usr/bin/env zsh
+#!/usr/bin/env sh
 
 # Select appropriate server
-servers=(`pcregrep -M 'South Korea\nServer\W+=\W+.+' /etc/pacman.d/mirrorlist | sed -En 's/Server\W+=\W+(.+)/\1/p'`)
-
-best=''
-min_rtt=''
-
-for server in ${servers}; do
-	address=`echo ${server} | sed -En 's/http:\/\/([^\/]+).*/\1/p'`
-	rtt=`ping -nqc 10 -s 1024 ${address} | tail -1 | awk -F '/' '{print $5}'`
-
-	if [[ (! -z ${rtt}) && (-z ${min_rtt} || ${rtt} -le ${min_rtt}) ]]; then
-		min_rtt=${rtt}
-		best=${server}
-	fi
-done
-
-echo ${best}
-echo "Server = ${best}" > /etc/pacman.d/mirrorlist
+curl -fsSLo mirrorlist https://www.archlinux.org/mirrorlist/\?country\=KR\&protocol\=http\&protocol\=https\&ip_version\=4\&ip_version\=6\&use_mirror_status\=on
+sed -i 's/^#\W*Server/Server/' mirrorlist
+rankmirrors mirrorlist > /etc/pacman.d/mirrorlist
+rm mirrorlist
 
 
 pacstrap ${MOUNT_POINT} base base-devel zsh vim
