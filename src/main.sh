@@ -14,8 +14,8 @@ BASEDIR=`dirname "$SCRIPT"`
 
 echo ${BASEDIR}
 
-source "$BASEDIR"/partition.sh
-source "$BASEDIR"/pre_chroot.sh
+. "$BASEDIR"/partition.sh
+. "$BASEDIR"/pre_chroot.sh
 
 cp "$BASEDIR"/environment.sh "$BASEDIR"/user.sh ${MOUNT_POINT}
 cp -r "$BASEDIR"/configs ${MOUNT_POINT}
