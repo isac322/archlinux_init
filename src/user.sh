@@ -49,10 +49,10 @@ yaourt -S ncurses5-compat-libs --noconfirm
 # install packages
 yaourt -S jre8 jdk8 zsh-completions zsh-autosuggestions zsh-fast-syntax-highlighting-git pm-utils tilix exfat-utils \
  python2-nautilus openssh adobe-source-code-pro-fonts plank paper-icon-theme-git ttf-nanumgothic_coding materia-theme \
- powerline-fonts unrar --noconfirm
+ powerline-fonts --noconfirm
 
-yaourt -S google-chrome chrome-gnome-shell-git slack-desktop intellij-idea-ultimate-edition linux-headers redshift \
- mendeleydesktop wine winetricks samba rust deluge-git gdb clion gksu ntfs-3g --noconfirm
+yaourt -S google-chrome chrome-gnome-shell-git slack-desktop intellij-idea-ultimate-edition \
+ mendeleydesktop wine winetricks rust deluge-git clion --noconfirm
 
 yaourt -S gnome-shell-extension-system-monitor-git gnome-shell-extension-workspaces-to-dock-git \
  gnome-shell-extension-topicons-plus-git gnome-shell-extension-no-topleft-hot-corner \
@@ -66,6 +66,7 @@ yaourt -R clion-jre intellij-idea-ultimate-edition-jre clion-cmake --noconfirm
 # for zsh plugins
 echo 'source /usr/share/zsh/plugins/zsh-autosuggestions/zsh-autosuggestions.zsh' >> ~/.zshrc
 echo 'source /usr/share/zsh/plugins/fast-syntax-highlighting/fast-syntax-highlighting.plugin.zsh' >> ~/.zshrc
+echo 'source /usr/share/doc/pkgfile/command-not-found.zsh' >> ~/.zshrc
 
 
 # for tilix

@@ -1,7 +1,7 @@
 #!/usr/bin/env zsh
 
 # Select appropriate server
-servers=(`pcregrep -M 'South Korea\nServer\W+=\W+.+' /etc/pacman.d/mirrorlist | sed -En 's/Server\W+=\W+(.+)/\1/p'`)
+servers=(`pcregrep -M 'South Korea\nServer\s+=\s+.+' /etc/pacman.d/mirrorlist | sed -En 's/Server\s+=\s+(.+)/\1/p'`)
 
 best=''
 min_rtt=''
