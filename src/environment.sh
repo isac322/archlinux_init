@@ -1,4 +1,4 @@
-#!/usr/bin/env zsh
+#!/usr/bin/env bash
 
 print_sep() {
 	echo '#####################################################################################################################'
@@ -14,7 +14,7 @@ ln -sf /usr/share/zoneinfo/Asia/Seoul /etc/localtime
 # Select appropriate locale
 locales=('en_US.UTF-8' 'ko_KR.UTF-8')
 
-for locale in ${locales}; do
+for locale in ${locales[@]}; do
 	sed -ri "s/#(${locale}.*)/\1/" /etc/locale.gen
 done
 echo 'LANG=ko_KR.UTF-8' > /etc/locale.conf
@@ -86,7 +86,7 @@ print_sep
 echo "DRIVER LIST"
 pacman -Ss xf86-video
 print_sep
-echo -n 'enter your full driver name : '
+printf 'enter your full driver name : '
 read driver
 
 pacman -S ${driver} --noconfirm

@@ -25,17 +25,6 @@ rm -rf package-query yaourt
 echo 'export VISUAL="vim"' >> ~/.zshrc
 
 
-# install nanum
-curl -Lo ttf-nanum.tgz https://aur.archlinux.org/cgit/aur.git/snapshot/ttf-nanum.tar.gz
-tar zxf ttf-nanum.tgz
-cd ttf-nanum
-address=`zsh -c 'source PKGBUILD; echo ${source[1]}'`
-md5=`curl -s "${address}" | md5sum | awk '{print $1}'`
-sed -Ei "s/md5sums=\('.+'\)/md5sums=('${md5}')/" PKGBUILD
-makepkg -si --noconfirm
-cd ..
-rm -rf ttf-nanum ttf-nanum.tgz
-
 
 sudo mount -o remount,size=4G /tmp
 
@@ -49,7 +38,7 @@ yaourt -S ncurses5-compat-libs --noconfirm
 # install packages
 yaourt -S jre8 jdk8 zsh-completions zsh-autosuggestions zsh-fast-syntax-highlighting-git pm-utils tilix exfat-utils \
  python2-nautilus openssh adobe-source-code-pro-fonts plank paper-icon-theme-git ttf-nanumgothic_coding materia-theme \
- powerline-fonts --noconfirm
+ powerline-fonts ttf-nanum --noconfirm
 
 yaourt -S google-chrome chrome-gnome-shell-git slack-desktop intellij-idea-ultimate-edition \
  mendeleydesktop wine winetricks rust deluge-git clion --noconfirm
@@ -61,6 +50,7 @@ yaourt -S gnome-shell-extension-system-monitor-git gnome-shell-extension-workspa
 
 
 yaourt -R clion-jre intellij-idea-ultimate-edition-jre clion-cmake --noconfirm
+gpg --delete-keys ${PGP_key}
 
 
 # for zsh plugins
