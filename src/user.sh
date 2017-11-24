@@ -6,7 +6,7 @@ timedatectl set-ntp true
 curl -fsSL https://raw.githubusercontent.com/robbyrussell/oh-my-zsh/master/tools/install.sh | sh
 
 # set oh-my-zsh plugins
-sed -Ei -e 's/plugins=\([^)]+\)/plugins=(git npm jsontools sudo docker pip python archlinux)/' \
+sed -Ei -e 's/plugins=\([^)]+\)/plugins=(git npm jsontools sudo docker pip python archlinux virtualenv)/' \
  -e 's/ZSH_THEME="[^"]+"/ZSH_THEME="agnoster"/' ~/.zshrc
 
 
@@ -39,6 +39,10 @@ yaourt -S ncurses5-compat-libs --noconfirm
 yaourt -S jre8 jdk8 zsh-completions zsh-autosuggestions zsh-fast-syntax-highlighting-git pm-utils tilix exfat-utils \
  python2-nautilus openssh adobe-source-code-pro-fonts plank paper-icon-theme-git ttf-nanumgothic_coding materia-theme \
  powerline-fonts unrar ttf-nanum --noconfirm
+
+# for hardware acceleration
+yaourt -S libva-intel-driver libva-utils vulkan-intel vdpauinfo libvdpau-va-gl --noconfirm
+
 
 yaourt -S google-chrome chrome-gnome-shell-git slack-desktop intellij-idea-ultimate-edition linux-headers redshift \
  mendeleydesktop wine winetricks samba rust deluge-git gdb clion gksu ntfs-3g --noconfirm
@@ -88,6 +92,7 @@ END
 
 cp -r /configs ~/
 
+# language=bash
 echo '#!/usr/bin/env sh
 for script in ~/configs/*.sh; do
     sh ${script}
@@ -96,4 +101,6 @@ yaourt -S vmware-workstation --noconfirm
 winecfg
 rm ~/init.sh ~/.config/autostart/init.desktop
 rm -rf ~/configs
-sudo grub-mkconfig -o /boot/grub/grub.cfg' > ~/init.sh
+sudo grub-mkconfig -o /boot/grub/grub.cfg
+sudo systemctl enable vmware-networks.service vmware-usbarbitrator.service vmware-hostd.service
+echo "mks.gl.allowBlacklistedDrivers = TRUE" > ~/.vmware/preferences' > ~/init.sh
