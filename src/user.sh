@@ -45,7 +45,7 @@ yaourt -S libva-intel-driver libva-utils vulkan-intel vdpauinfo libvdpau-va-gl -
 
 
 yaourt -S google-chrome chrome-gnome-shell-git slack-desktop intellij-idea-ultimate-edition \
- mendeleydesktop wine winetricks rust deluge-git clion --noconfirm
+ mendeleydesktop wine-staging winetricks rust deluge-git clion --noconfirm
 
 yaourt -S gnome-shell-extension-system-monitor-git gnome-shell-extension-workspaces-to-dock-git \
  gnome-shell-extension-topicons-plus-git gnome-shell-extension-no-topleft-hot-corner \
