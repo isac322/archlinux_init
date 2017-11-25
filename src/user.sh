@@ -36,7 +36,7 @@ gpg --recv-keys ${PGP_key}
 yaourt -S ncurses5-compat-libs --noconfirm
 
 # install packages
-yaourt -S jre8 jdk8 zsh-completions zsh-autosuggestions zsh-fast-syntax-highlighting-git pm-utils tilix exfat-utils \
+yaourt -S jre8 jdk8 zsh-completions zsh-autosuggestions zsh-fast-syntax-highlighting-git pm-utils tilix exfat-dkms-git \
  python2-nautilus openssh adobe-source-code-pro-fonts plank paper-icon-theme-git ttf-nanumgothic_coding materia-theme \
  powerline-fonts ttf-nanum --noconfirm
 
