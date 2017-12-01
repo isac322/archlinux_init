@@ -38,7 +38,7 @@ yaourt -S ncurses5-compat-libs --noconfirm
 # install packages
 yaourt -S jre8 jdk8 zsh-completions zsh-autosuggestions zsh-fast-syntax-highlighting-git pm-utils tilix exfat-dkms-git \
  python2-nautilus openssh adobe-source-code-pro-fonts plank paper-icon-theme-git ttf-nanumgothic_coding materia-theme \
- powerline-fonts ttf-nanum --noconfirm
+ powerline-fonts ttf-nanum vundle-git --noconfirm
 
 # for hardware acceleration
 yaourt -S libva-intel-driver libva-utils vulkan-intel vdpauinfo libvdpau-va-gl --noconfirm
@@ -53,7 +53,7 @@ yaourt -S gnome-shell-extension-system-monitor-git gnome-shell-extension-workspa
  gnome-shell-extension-autohide-battery-git --noconfirm
 
 
-yaourt -R clion-jre intellij-idea-ultimate-edition-jre clion-cmake --noconfirm
+yaourt -R clion-cmake clion-gdb --noconfirm
 gpg --delete-keys ${PGP_key}
 
 
