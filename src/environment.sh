@@ -4,7 +4,7 @@ print_sep() {
 	echo '#####################################################################################################################'
 }
 
-sed -Ei "s/#?\W*MAKEFLAGS=.+/MAKEFLAGS=\"-j$(nproc)\"/" /etc/makepkg.conf
+sed -Ei "s/#?\s*MAKEFLAGS=.+/MAKEFLAGS=\"-j$(nproc)\"/" /etc/makepkg.conf
 timedatectl set-ntp true
 
 echo "$HOST_NAME" > /etc/hostname
@@ -22,7 +22,7 @@ locale-gen
 
 
 # enable multilib
-perl -i -0777 -pe 's/#\W*\[multilib\]\n#\W*(.+)/[multilib]\n\1/g' /etc/pacman.conf
+perl -i -0777 -pe 's/#\s*\[multilib\]\n#\s*(.+)/[multilib]\n\1/g' /etc/pacman.conf
 pacman -Syu
 
 
@@ -62,7 +62,7 @@ grub-mkconfig -o /boot/grub/grub.cfg
 
 
 useradd -m -g users -G storage,power,wheel -s /bin/zsh ${USER_NAME}
-sed -Ei 's/#\W+%wheel\W+ALL=\(ALL\)\W+ALL/%wheel ALL=(ALL) ALL/' /etc/sudoers
+sed -Ei 's/#\s+%wheel\s+ALL=\(ALL\)\s+ALL/%wheel ALL=(ALL) ALL/' /etc/sudoers
 print_sep
 echo "setting password of ${USER_NAME}"
 passwd "${USER_NAME}"
@@ -71,7 +71,13 @@ pacman -R vi --noconfirm
 ln -s /usr/bin/vim /usr/bin/vi
 
 
-pacman -S git xorg-server xorg-xinit xf86-input-synaptics --noconfirm
+pacman -S git unrar pkgfile pigz linux-headers redshift gksu gdb ntfs-3g samba xorg-server xorg-xinit --noconfirm
+pkgfile --update
+
+# optimize makepkg
+sed -Ei "s/PKGEXT=.+/PKGEXT='.pkg.tar'/" /etc/makepkg.conf
+sed -E "s/COMPRESSGZ\s*=\s*\(\s*(\S+)\s+([^)]+)\)/COMPRESSGZ=(pigz \2)/" /etc/makepkg.conf
+sed -E "s/COMPRESSXZ\s*=\s*\((.+)\)/COMPRESSXZ=(\1 --threads=0)/" /etc/makepkg.conf
 
 # install xorg graphic driver
 print_sep
