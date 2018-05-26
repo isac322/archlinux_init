@@ -32,11 +32,11 @@ echo 'setting password of root'
 passwd
 
 # for hibernate
-sed -Ei 's/HOOKS="(.+)udev(.+)/HOOKS="\1udev resume\2/' /etc/mkinitcpio.conf
+sed -Ei 's/HOOKS=(.+)udev(.+)/HOOKS=\1udev resume\2/' /etc/mkinitcpio.conf
 mkinitcpio -p linux
 
 
-pacman -S grub efibootmgr os-prober --noconfirm
+pacman -S grub efibootmgr os-prober intel-ucode --noconfirm
 grub-install --target=x86_64-efi --efi-directory=/boot/efi --bootloader-id=archlinux
 # add useful entries to grub
 tee -a /etc/grub.d/40_custom > /dev/null << END
@@ -71,13 +71,14 @@ pacman -R vi --noconfirm
 ln -s /usr/bin/vim /usr/bin/vi
 
 
-pacman -S git unrar pkgfile pigz linux-headers redshift gksu gdb ntfs-3g samba xorg-server xorg-xinit --noconfirm
+pacman -S git bluez bluez-utils unrar pkgfile pigz sshfs most cmake linux-headers redshift \
+ gdb ntfs-3g samba xorg-server xorg-xinit --noconfirm
 pkgfile --update
 
 # optimize makepkg
 sed -Ei "s/PKGEXT=.+/PKGEXT='.pkg.tar'/" /etc/makepkg.conf
-sed -E "s/COMPRESSGZ\s*=\s*\(\s*(\S+)\s+([^)]+)\)/COMPRESSGZ=(pigz \2)/" /etc/makepkg.conf
-sed -E "s/COMPRESSXZ\s*=\s*\((.+)\)/COMPRESSXZ=(\1 --threads=0)/" /etc/makepkg.conf
+sed -Ei "s/COMPRESSGZ\s*=\s*\(\s*(\S+)\s+([^)]+)\)/COMPRESSGZ=(pigz \2)/" /etc/makepkg.conf
+sed -Ei "s/COMPRESSXZ\s*=\s*\((.+)\)/COMPRESSXZ=(\1 --threads=0)/" /etc/makepkg.conf
 
 # install xorg graphic driver
 print_sep
@@ -94,13 +95,33 @@ if [ $? -ne 0 ]; then
 	pacman -S xorg-drivers --noconfirm
 fi
 
+# for touchpad gesture
+yaourt -S libinput-gestures --noconfirm
+sudo gpasswd -a ${USER_NAME} input
+
+# for fingerprint
+yaourt -S fingerprint-gui --noconfirm
+
+# for trackpoint scroll (Dell Latitude 7490 only)
+tee /etc/X11/xinit/xinitrc.d/99-trackpoint-scroll.sh > /dev/null << END
+#!/usr/bin/env sh
+
+xinput set-prop "DELL081C:00 044E:121F Mouse" "libinput Scroll Method Enabled" 0 0 1
+xinput set-prop "DELL081C:00 044E:121F Mouse" "libinput Accel Speed" -0.4
+END
+
+# for SmartCardReader (run pcsc_scan for test)
+yaourt -S ccid opensc pcsc-tools --noconfirm
+# auto start SmartCardReader service
+systemctl enable pcscd.service
 
 # install desktop
 pacman -S baobab eog eog-plugins evince gdm gnome-calculator gnome-control-center gnome-disk-utility gnome-font-viewer \
  gnome-keyring gnome-screenshot gnome-settings-daemon gnome-shell gnome-shell-extensions gnome-system-monitor \
-  gucharmap gvfs gvfs-afc gvfs-goa gvfs-google gvfs-mtp gvfs-nfs gvfs-smb mousetweaks nautilus networkmanager totem \
-  vino xdg-user-dirs-gtk cheese dconf-editor file-roller gedit gnome-logs gnome-mines gnome-sound-recorder gnome-todo \
-  gnome-tweak-tool seahorse vinagre gparted meld ttf-ubuntu-font-family fcitx-configtool fcitx-hangul fcitx-gtk3 --noconfirm
+ gucharmap gvfs gvfs-afc gvfs-goa gvfs-google gvfs-mtp gvfs-nfs gvfs-smb mousetweaks nautilus networkmanager totem \
+ gst-libav vino xdg-user-dirs-gtk cheese dconf-editor file-roller gedit gnome-logs gnome-mines gnome-sound-recorder \
+ gnome-todo gnome-tweak-tool seahorse vinagre gparted meld ttf-ubuntu-font-family \
+ fcitx-configtool fcitx-hangul fcitx-gtk3 --noconfirm
 
 # enable fcitx
 tee /etc/X11/xinit/xinitrc.d/60-fctix.sh > /dev/null << END
@@ -114,6 +135,7 @@ chmod +x /etc/X11/xinit/xinitrc.d/60-fctix.sh
 
 systemctl enable NetworkManager
 systemctl enable gdm
+systemctl enable bluetooth.service
 
 # gnome (2017-10-03)
 #9 gnome-calculator

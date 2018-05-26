@@ -5,6 +5,7 @@ timedatectl set-ntp true
 # install oh-my-zsh
 curl -fsSL https://raw.githubusercontent.com/robbyrussell/oh-my-zsh/master/tools/install.sh | sh
 
+# FIXME: doesn't work
 # set oh-my-zsh plugins
 sed -Ei -e 's/plugins=\([^)]+\)/plugins=(git npm jsontools sudo docker pip python archlinux virtualenv)/' \
  -e 's/ZSH_THEME="[^"]+"/ZSH_THEME="agnoster"/' ~/.zshrc
@@ -29,32 +30,24 @@ echo 'export VISUAL="vim"' >> ~/.zshrc
 sudo mount -o remount,size=4G /tmp
 
 
-# for ncurses5-compat-libs that need to install clion
-PGP_key=`curl -s https://aur.archlinux.org/cgit/aur.git/plain/PKGBUILD\?h\=ncurses5-compat-libs | sed -En "s/validpgpkeys=\('(.+)'\).*/\1/p"`
-gpg --recv-keys ${PGP_key}
-
-yaourt -S ncurses5-compat-libs --noconfirm
-
 # install packages
-yaourt -S jre8 jdk8 zsh-completions zsh-autosuggestions zsh-fast-syntax-highlighting-git pm-utils tilix exfat-dkms-git \
- python2-nautilus openssh adobe-source-code-pro-fonts plank paper-icon-theme-git ttf-nanumgothic_coding materia-theme \
- powerline-fonts ttf-nanum vundle-git --noconfirm
+yaourt -S jdk zsh-completions zsh-autosuggestions zsh-fast-syntax-highlighting-git tilix-bin exfat-dkms-git \
+ openssh adobe-source-code-pro-fonts htop plank paper-icon-theme-git ttf-nanumgothic_coding materia-gtk-theme \
+ powerline-fonts ttf-nanum vundle --noconfirm
 
 # for hardware acceleration
 yaourt -S libva-intel-driver libva-utils vulkan-intel vdpauinfo libvdpau-va-gl --noconfirm
 
 
-yaourt -S google-chrome chrome-gnome-shell-git slack-desktop intellij-idea-ultimate-edition \
- mendeleydesktop wine-staging winetricks rust deluge-git clion --noconfirm
+yaourt -S google-chrome chrome-gnome-shell slack-desktop intellij-idea-ultimate-edition \
+ mendeleydesktop wine-staging winetricks rustup deluge-git clion --noconfirm
 
-yaourt -S gnome-shell-extension-system-monitor-git gnome-shell-extension-workspaces-to-dock-git \
- gnome-shell-extension-topicons-plus-git gnome-shell-extension-no-topleft-hot-corner \
- gnome-shell-extension-mediaplayer-git gnome-shell-extension-dynamic-top-bar \
- gnome-shell-extension-autohide-battery-git --noconfirm
+yaourt -S gnome-shell-extension-system-monitor-git gnome-shell-extension-workspaces-to-dock \
+ gnome-shell-extension-topicons-plus gnome-shell-extension-no-topleft-hot-corner \
+ gnome-shell-extension-dynamic-top-bar gnome-shell-extension-autohide-battery-git --noconfirm
 
 
 yaourt -R clion-cmake clion-gdb --noconfirm
-gpg --delete-keys ${PGP_key}
 
 
 # for zsh plugins
@@ -69,12 +62,6 @@ if [ \$TILIX_ID ] || [ \$VTE_VERSION ]; then
         source /etc/profile.d/vte.sh
 fi
 END
-
-
-# TODO: after first booting
-# WINEARCH=win32 winetricks dotnet40 gdiplus msxml6 riched30 wmp9
-# winetricks win7
-# yaourt -S vmware-workstation
 
 
 # remove unused packages
@@ -92,16 +79,23 @@ Exec=tilix -e sh /home/$USER/init.sh
 END
 
 cp -r /configs ~/
-
-# language=bash
-echo '#!/usr/bin/env sh
+tee ~/init.sh > /dev/null << END
+#!/usr/bin/env bash
 for script in ~/configs/*.sh; do
     sh ${script}
 done
+
+# for ncurses5-compat-libs that need to install vmware-workstation
+PGP_key=`curl -s https://aur.archlinux.org/cgit/aur.git/plain/PKGBUILD\?h\=ncurses5-compat-libs | sed -En "s/validpgpkeys=\('(.+)'\).*/\1/p"`
+gpg --recv-keys ${PGP_key}
 yaourt -S vmware-workstation --noconfirm
+
 winecfg
+
 rm ~/init.sh ~/.config/autostart/init.desktop
 rm -rf ~/configs
+
 sudo grub-mkconfig -o /boot/grub/grub.cfg
-sudo systemctl enable vmware-networks.service vmware-usbarbitrator.service vmware-hostd.service
-echo "mks.gl.allowBlacklistedDrivers = TRUE" > ~/.vmware/preferences' > ~/init.sh
+sudo systemctl enable vmware-networks.service vmware-usbarbitrator.service
+echo "mks.gl.allowBlacklistedDrivers = TRUE" > ~/.vmware/preferences
+END
