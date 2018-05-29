@@ -7,21 +7,17 @@ curl -fsSL https://raw.githubusercontent.com/robbyrussell/oh-my-zsh/master/tools
 
 # FIXME: doesn't work
 # set oh-my-zsh plugins
-sed -Ei -e 's/plugins=\([^)]+\)/plugins=(git npm jsontools sudo docker pip python archlinux virtualenv)/' \
+sed -Ei \
+ -e 's/plugins=\([^)]+\)/plugins=(git npm jsontools sudo docker pip python archlinux virtualenv)/' \
  -e 's/ZSH_THEME="[^"]+"/ZSH_THEME="agnoster"/' ~/.zshrc
 
 
-# install yaourt
-git clone https://aur.archlinux.org/package-query.git
-cd package-query
-makepkg -si --noconfirm
+# install pikaur
+git clone https://aur.archlinux.org/pikaur.git
+cd pikaur
+makepkg -fsri
 cd ..
-git clone https://aur.archlinux.org/yaourt.git
-cd yaourt
-makepkg -si --noconfirm
-cd ..
-
-rm -rf package-query yaourt
+rm -rf pikaur
 
 echo 'export VISUAL="vim"' >> ~/.zshrc
 
@@ -31,23 +27,23 @@ sudo mount -o remount,size=4G /tmp
 
 
 # install packages
-yaourt -S jdk zsh-completions zsh-autosuggestions zsh-fast-syntax-highlighting-git tilix-bin exfat-dkms-git \
+pikaur -S jdk zsh-completions zsh-autosuggestions zsh-fast-syntax-highlighting-git tilix-bin exfat-dkms-git \
  openssh adobe-source-code-pro-fonts powerline-fonts ttf-symbola ttf-nanum ttf-nanumgothic_coding \
  vundle htop plank paper-icon-theme-git  materia-gtk-theme --noconfirm
 
 # for hardware acceleration
-yaourt -S libva-intel-driver libva-utils vulkan-intel vdpauinfo libvdpau-va-gl --noconfirm
+pikaur -S libva-intel-driver libva-utils vulkan-intel vdpauinfo libvdpau-va-gl --noconfirm
 
 
-yaourt -S google-chrome chrome-gnome-shell slack-desktop intellij-idea-ultimate-edition \
+pikaur -S google-chrome chrome-gnome-shell slack-desktop intellij-idea-ultimate-edition \
  mendeleydesktop wine-staging winetricks rustup deluge-git clion --noconfirm
 
-yaourt -S gnome-shell-extension-system-monitor-git gnome-shell-extension-workspaces-to-dock \
+pikaur -S gnome-shell-extension-system-monitor-git gnome-shell-extension-workspaces-to-dock \
  gnome-shell-extension-topicons-plus gnome-shell-extension-no-topleft-hot-corner \
  gnome-shell-extension-dynamic-top-bar gnome-shell-extension-autohide-battery-git --noconfirm
 
 
-yaourt -R clion-cmake clion-gdb --noconfirm
+pikaur -R clion-cmake clion-gdb --noconfirm
 
 
 # for zsh plugins
@@ -65,7 +61,7 @@ END
 
 
 # remove unused packages
-yaourt -Rsn `yaourt -Qdtq` --noconfirm
+pikaur -Rsn `pikaur -Qdtq` --noconfirm
 
 
 mkdir ~/.config/autostart/ -p
@@ -88,7 +84,7 @@ done
 # for ncurses5-compat-libs that need to install vmware-workstation
 PGP_key=`curl -s https://aur.archlinux.org/cgit/aur.git/plain/PKGBUILD\?h\=ncurses5-compat-libs | sed -En "s/validpgpkeys=\('(.+)'\).*/\1/p"`
 gpg --recv-keys ${PGP_key}
-yaourt -S vmware-workstation --noconfirm
+pikaur -S vmware-workstation --noconfirm
 
 winecfg
 
