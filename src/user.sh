@@ -12,12 +12,12 @@ sed -Ei \
  -e 's/ZSH_THEME="[^"]+"/ZSH_THEME="agnoster"/' ~/.zshrc
 
 
-# install pikaur
-git clone https://aur.archlinux.org/pikaur.git
-cd pikaur
+# install aurman
+git clone https://aur.archlinux.org/aurman.git
+cd aurman
 makepkg -fsri
 cd ..
-rm -rf pikaur
+rm -rf aurman
 
 echo 'export VISUAL="vim"' >> ~/.zshrc
 
@@ -27,23 +27,23 @@ sudo mount -o remount,size=4G /tmp
 
 
 # install packages
-pikaur -S jdk zsh-completions zsh-autosuggestions zsh-fast-syntax-highlighting-git tilix-bin exfat-dkms-git \
+aurman -S jdk zsh-completions zsh-autosuggestions zsh-fast-syntax-highlighting-git tilix-bin exfat-dkms-git \
  openssh adobe-source-code-pro-fonts powerline-fonts ttf-symbola ttf-nanum ttf-nanumgothic_coding \
  vundle htop plank paper-icon-theme-git  materia-gtk-theme --noconfirm
 
 # for hardware acceleration
-pikaur -S libva-intel-driver libva-utils vulkan-intel vdpauinfo libvdpau-va-gl --noconfirm
+aurman -S libva-intel-driver libva-utils vulkan-intel vdpauinfo libvdpau-va-gl --noconfirm
 
 
-pikaur -S google-chrome chrome-gnome-shell slack-desktop intellij-idea-ultimate-edition \
+aurman -S google-chrome chrome-gnome-shell slack-desktop intellij-idea-ultimate-edition \
  mendeleydesktop wine-staging winetricks rustup deluge-git clion --noconfirm
 
-pikaur -S gnome-shell-extension-system-monitor-git gnome-shell-extension-workspaces-to-dock \
+aurman -S gnome-shell-extension-system-monitor-git gnome-shell-extension-workspaces-to-dock \
  gnome-shell-extension-topicons-plus gnome-shell-extension-no-topleft-hot-corner \
  gnome-shell-extension-dynamic-top-bar gnome-shell-extension-autohide-battery-git --noconfirm
 
 
-pikaur -R clion-cmake clion-gdb --noconfirm
+aurman -R clion-cmake clion-gdb --noconfirm
 
 
 # for zsh plugins
@@ -61,7 +61,7 @@ END
 
 
 # remove unused packages
-pikaur -Rsn `pikaur -Qdtq` --noconfirm
+aurman -Rsn `aurman -Qdtq` --noconfirm
 
 
 mkdir ~/.config/autostart/ -p
@@ -84,7 +84,7 @@ done
 # for ncurses5-compat-libs that need to install vmware-workstation
 PGP_key=`curl -s https://aur.archlinux.org/cgit/aur.git/plain/PKGBUILD\?h\=ncurses5-compat-libs | sed -En "s/validpgpkeys=\('(.+)'\).*/\1/p"`
 gpg --recv-keys ${PGP_key}
-pikaur -S vmware-workstation --noconfirm
+aurman -S vmware-workstation --noconfirm
 
 winecfg
 
