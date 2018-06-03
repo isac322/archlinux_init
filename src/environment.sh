@@ -118,9 +118,9 @@ systemctl enable pcscd.service
 # install desktop
 pacman -S baobab eog eog-plugins evince gdm gnome-calculator gnome-control-center gnome-disk-utility gnome-font-viewer \
  gnome-keyring gnome-screenshot gnome-settings-daemon gnome-shell gnome-shell-extensions gnome-system-monitor \
- gucharmap gvfs gvfs-afc gvfs-goa gvfs-google gvfs-mtp gvfs-nfs gvfs-smb mousetweaks nautilus networkmanager totem \
- gst-libav vino xdg-user-dirs-gtk cheese dconf-editor file-roller gedit gnome-logs gnome-mines gnome-sound-recorder \
- gnome-todo gnome-tweak-tool gnome-video-effects seahorse vinagre gparted meld ttf-ubuntu-font-family \
+ gucharmap gvfs gvfs-afc gvfs-goa gvfs-google gvfs-gphoto2 gvfs-mtp gvfs-nfs gvfs-smb mousetweaks nautilus \
+ networkmanager totem gst-libav vino xdg-user-dirs-gtk cheese dconf-editor file-roller gedit gnome-logs gnome-mines \
+ gnome-sound-recorder gnome-tweak-tool gnome-video-effects seahorse vinagre gparted meld ttf-ubuntu-font-family \
  fcitx-configtool fcitx-hangul fcitx-gtk3 --noconfirm
 
 

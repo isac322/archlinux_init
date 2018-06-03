@@ -15,7 +15,7 @@ sed -Ei \
 # install aurman
 git clone https://aur.archlinux.org/aurman.git
 cd aurman
-makepkg -fsri
+makepkg -fsri --noconfirm
 cd ..
 rm -rf aurman
 
