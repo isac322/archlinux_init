@@ -123,6 +123,11 @@ pacman -S baobab eog eog-plugins evince gdm gnome-calculator gnome-control-cente
  gnome-todo gnome-tweak-tool gnome-video-effects seahorse vinagre gparted meld ttf-ubuntu-font-family \
  fcitx-configtool fcitx-hangul fcitx-gtk3 --noconfirm
 
+
+# for printer support
+pacman -S cups system-config-printer --noconfirm
+systemctl enable org.cups.cupsd.service
+
 # enable fcitx
 tee /etc/X11/xinit/xinitrc.d/60-fctix.sh > /dev/null << END
 #!/usr/bin/env sh
