@@ -1,7 +1,9 @@
 #!/usr/bin/env sh
 
+pacman -Sy pacman-contrib --noconfirm
+
 # Select appropriate server
-curl -fsSLo mirrorlist https://www.archlinux.org/mirrorlist/\?country\=KR\&protocol\=http\&protocol\=https\&ip_version\=4\&ip_version\=6\&use_mirror_status\=on
+curl -fsSLo mirrorlist https://www.archlinux.org/mirrorlist/\?country\=KR
 sed -i 's/^#\W*Server/Server/' mirrorlist
 rankmirrors mirrorlist > /etc/pacman.d/mirrorlist
 rm mirrorlist
