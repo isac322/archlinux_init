@@ -59,7 +59,7 @@ menuentry "Firmware setup" {
 }
 END
 # add resume point to swap partition
-SWAP_UUID=`blkid ${SWAP_PARTITION} | sed -E 's/.*UUID="(.+)".*/\1/'`
+SWAP_UUID=`blkid ${SWAP_PARTITION} | sed -E 's/.*\s+UUID="([^"]+)".*/\1/'`
 sed -Ei "s/GRUB_CMDLINE_LINUX_DEFAULT=\"(.+)\"/GRUB_CMDLINE_LINUX_DEFAULT=\"\1 resume=UUID=${SWAP_UUID}\"/" /etc/default/grub
 grub-mkconfig -o /boot/grub/grub.cfg
 
