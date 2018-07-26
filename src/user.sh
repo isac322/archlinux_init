@@ -5,11 +5,9 @@ timedatectl set-ntp true
 # install oh-my-zsh
 curl -fsSL https://raw.githubusercontent.com/robbyrussell/oh-my-zsh/master/tools/install.sh | sh
 
-# FIXME: doesn't work
 # set oh-my-zsh plugins
-sed -Ei \
- -e 's/plugins=\([^)]+\)/plugins=(git npm jsontools sudo docker pip python archlinux virtualenv)/' \
- -e 's/ZSH_THEME="[^"]+"/ZSH_THEME="agnoster"/' ~/.zshrc
+sed -Ei -e 's/ZSH_THEME="[^"]+"/ZSH_THEME="powerlevel9k/powerlevel9k"/' ~/.zshrc
+perl -i -0777 -pe 's/plugins=\(\n.+\n\)/plugins=(git npm jsontools sudo docker pip python archlinux virtualenv)/g' ~/.zshrc
 
 
 # install aurman
@@ -21,6 +19,18 @@ rm -rf aurman
 
 echo 'export VISUAL="vim"' >> ~/.zshrc
 
+# for touchpad gesture
+aurman -S libinput-gestures --noconfirm
+sudo gpasswd -a ${USER_NAME} input
+
+# for fingerprint
+# aurman -S fingerprint-gui --noconfirm
+
+# for SmartCardReader (run pcsc_scan for test)
+aurman -S ccid opensc pcsc-tools --noconfirm
+# auto start SmartCardReader service
+sudo systemctl enable pcscd.service
+
 
 
 sudo mount -o remount,size=4G /tmp
@@ -29,7 +39,10 @@ sudo mount -o remount,size=4G /tmp
 # install packages
 aurman -S jdk zsh-completions zsh-autosuggestions zsh-fast-syntax-highlighting-git tilix-bin exfat-dkms-git \
  openssh adobe-source-code-pro-fonts powerline-fonts ttf-symbola ttf-nanum ttf-nanumgothic_coding \
- vundle htop plank paper-icon-theme-git  materia-gtk-theme --noconfirm
+ vundle htop plank paper-icon-theme-git materia-gtk-theme zsh-theme-powerlevel9k --noconfirm
+
+# link powerlevel9k theme to oh-my-zsh
+ln -s /usr/share/zsh-theme-powerlevel9k ~/.oh-my-zsh/custom/themes/powerlevel9k
 
 # for hardware acceleration
 aurman -S libva-intel-driver libva-utils vulkan-intel vdpauinfo libvdpau-va-gl --noconfirm

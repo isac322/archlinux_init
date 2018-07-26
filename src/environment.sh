@@ -25,6 +25,9 @@ locale-gen
 perl -i -0777 -pe 's/#\s*\[multilib\]\n#\s*(.+)/[multilib]\n\1/g' /etc/pacman.conf
 pacman -Syu
 
+# colorize pacman
+sed -Ei -e 's/#Color/Color/' /etc/pacman.conf
+
 
 chsh -s `which zsh`
 print_sep
@@ -95,13 +98,6 @@ if [ $? -ne 0 ]; then
 	pacman -S xorg-drivers --noconfirm
 fi
 
-# for touchpad gesture
-yaourt -S libinput-gestures --noconfirm
-sudo gpasswd -a ${USER_NAME} input
-
-# for fingerprint
-yaourt -S fingerprint-gui --noconfirm
-
 # for trackpoint scroll (Dell Latitude 7490 only)
 tee /etc/X11/xinit/xinitrc.d/99-trackpoint-scroll.sh > /dev/null << END
 #!/usr/bin/env sh
@@ -109,11 +105,6 @@ tee /etc/X11/xinit/xinitrc.d/99-trackpoint-scroll.sh > /dev/null << END
 xinput set-prop "DELL081C:00 044E:121F Mouse" "libinput Scroll Method Enabled" 0 0 1
 xinput set-prop "DELL081C:00 044E:121F Mouse" "libinput Accel Speed" -0.4
 END
-
-# for SmartCardReader (run pcsc_scan for test)
-yaourt -S ccid opensc pcsc-tools --noconfirm
-# auto start SmartCardReader service
-systemctl enable pcscd.service
 
 # install desktop
 pacman -S baobab eog eog-plugins evince gdm gnome-calculator gnome-control-center gnome-disk-utility gnome-font-viewer \
