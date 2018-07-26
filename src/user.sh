@@ -38,7 +38,7 @@ sudo mount -o remount,size=4G /tmp
 
 # install packages
 aurman -S jdk zsh-completions zsh-autosuggestions zsh-fast-syntax-highlighting-git tilix-bin exfat-dkms-git \
- openssh adobe-source-code-pro-fonts powerline-fonts ttf-symbola ttf-nanum ttf-nanumgothic_coding \
+ python-nautilus openssh adobe-source-code-pro-fonts powerline-fonts ttf-symbola ttf-nanum ttf-nanumgothic_coding \
  vundle htop plank paper-icon-theme-git materia-gtk-theme zsh-theme-powerlevel9k --noconfirm
 
 # link powerlevel9k theme to oh-my-zsh
