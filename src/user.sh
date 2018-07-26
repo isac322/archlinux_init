@@ -1,4 +1,4 @@
-#!/usr/bin/env sh
+#!/usr/bin/env bash
 
 timedatectl set-ntp true
 
@@ -91,12 +91,12 @@ cp -r /configs ~/
 tee ~/init.sh > /dev/null << END
 #!/usr/bin/env bash
 for script in ~/configs/*.sh; do
-    sh ${script}
+    sh \${script}
 done
 
 # for ncurses5-compat-libs that need to install vmware-workstation
 PGP_key=`curl -s https://aur.archlinux.org/cgit/aur.git/plain/PKGBUILD\?h\=ncurses5-compat-libs | sed -En "s/validpgpkeys=\('(.+)'\).*/\1/p"`
-gpg --recv-keys ${PGP_key}
+gpg --recv-keys \${PGP_key}
 aurman -S vmware-workstation --noconfirm
 
 winecfg
