@@ -84,7 +84,7 @@ tee ~/.config/autostart/init.desktop > /dev/null << END
 [Desktop Entry]
 Name=Init
 Type=Application
-Exec=tilix -e sh /home/$USER/init.sh
+Exec=tilix -e sh /home/\$USER/init.sh
 END
 
 cp -r /configs ~/
