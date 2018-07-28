@@ -21,6 +21,8 @@ echo 'export VISUAL="vim"' >> ~/.zshrc
 
 # for touchpad gesture
 aurman -S libinput-gestures --noconfirm
+libinput-gestures-setup autostart
+libinput-gestures-setup start
 sudo gpasswd -a ${USER_NAME} input
 
 # for fingerprint
@@ -48,15 +50,13 @@ ln -s /usr/share/zsh-theme-powerlevel9k ~/.oh-my-zsh/custom/themes/powerlevel9k
 aurman -S libva-intel-driver libva-utils vulkan-intel vdpauinfo libvdpau-va-gl --noconfirm
 
 
-aurman -S google-chrome chrome-gnome-shell slack-desktop intellij-idea-ultimate-edition \
- mendeleydesktop wine-staging winetricks rustup deluge-git clion --noconfirm
+aurman -S google-chrome chrome-gnome-shell slack-desktop \
+ intellij-idea-ultimate-edition intellij-idea-ultimate-edition-jre clion clion-jre \
+ mendeleydesktop wine-staging winetricks rustup deluge-git --noconfirm
 
 aurman -S gnome-shell-extension-system-monitor-git gnome-shell-extension-workspaces-to-dock \
  gnome-shell-extension-topicons-plus gnome-shell-extension-no-topleft-hot-corner \
  gnome-shell-extension-dynamic-top-bar gnome-shell-extension-autohide-battery-git --noconfirm
-
-
-aurman -R clion-cmake clion-gdb --noconfirm
 
 
 # for zsh plugins
@@ -68,7 +68,7 @@ echo 'source /usr/share/doc/pkgfile/command-not-found.zsh' >> ~/.zshrc
 # for tilix
 tee -a ~/.zshrc > /dev/null << END
 if [ \$TILIX_ID ] || [ \$VTE_VERSION ]; then
-        source /etc/profile.d/vte.sh
+	source /etc/profile.d/vte.sh
 fi
 END
 
