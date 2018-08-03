@@ -41,7 +41,8 @@ sudo mount -o remount,size=4G /tmp
 # install packages
 aurman -S jdk zsh-completions zsh-autosuggestions zsh-fast-syntax-highlighting-git tilix-bin exfat-dkms-git \
  python-nautilus openssh adobe-source-code-pro-fonts powerline-fonts ttf-symbola ttf-nanum ttf-nanumgothic_coding \
- python-pip vundle htop plank paper-icon-theme-git materia-gtk-theme zsh-theme-powerlevel9k --noconfirm
+ python-pip vundle htop plank paper-icon-theme-git materia-gtk-theme zsh-theme-powerlevel9k \
+ zsh-history-search-multi-word-git alias-tips-git --noconfirm
 
 # link powerlevel9k theme to oh-my-zsh
 ln -s /usr/share/zsh-theme-powerlevel9k ~/.oh-my-zsh/custom/themes/powerlevel9k
@@ -63,6 +64,8 @@ aurman -S gnome-shell-extension-system-monitor-git gnome-shell-extension-workspa
 echo 'source /usr/share/zsh/plugins/zsh-autosuggestions/zsh-autosuggestions.zsh' >> ~/.zshrc
 echo 'source /usr/share/zsh/plugins/fast-syntax-highlighting/fast-syntax-highlighting.plugin.zsh' >> ~/.zshrc
 echo 'source /usr/share/doc/pkgfile/command-not-found.zsh' >> ~/.zshrc
+echo 'source /usr/share/zsh/plugins/history-search-multi-word/history-search-multi-word.plugin.zsh' >> ~/.zshrc
+echo 'source /usr/share/zsh/plugins/alias-tips/alias-tips.plugin.zsh' >> ~/.zshrc
 
 
 # for tilix
