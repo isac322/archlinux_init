@@ -56,7 +56,7 @@ yay -S libva-intel-driver libva-utils vulkan-intel vdpauinfo libvdpau-va-gl --no
 
 yay -S google-chrome chrome-gnome-shell slack-desktop \
  intellij-idea-ultimate-edition intellij-idea-ultimate-edition-jre clion clion-jre \
- mendeleydesktop wine-staging winetricks rustup deluge-git --noconfirm
+ mendeleydesktop wine-staging winetricks rustup deluge-git vmware-workstation --noconfirm
 yay -S cmake gdb --asdep --noconfirm
 
 yay -S gnome-shell-extension-system-monitor-git gnome-shell-extension-workspaces-to-dock-git \
@@ -101,11 +101,6 @@ tee ~/init.sh > /dev/null << END
 for script in ~/configs/*.sh; do
     sh \${script}
 done
-
-# for ncurses5-compat-libs that need to install vmware-workstation
-PGP_key=`curl -s https://aur.archlinux.org/cgit/aur.git/plain/PKGBUILD\?h\=ncurses5-compat-libs | sed -En "s/validpgpkeys=\('(.+)'\).*/\1/p"`
-gpg --recv-keys \${PGP_key}
-yay -S vmware-workstation --noconfirm
 
 winecfg
 
