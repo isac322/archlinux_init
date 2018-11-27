@@ -35,11 +35,14 @@ sudo systemctl enable pcscd.service
 
 
 
-sudo mount -o remount,size=4G /tmp
+tmp_size=`df --output=avail /tmp | tail -1`
+if [ ${tmp_size} -lt 4194304 ]; then
+	sudo mount -o remount,size=4G /tmp
+fi
 
 
 # install packages
-yay -S jdk zsh-completions zsh-autosuggestions zsh-fast-syntax-highlighting-git tilix-bin exfat-dkms-git \
+yay -S jdk zsh-completions zsh-autosuggestions zsh-fast-syntax-highlighting-git tilix exfat-dkms-git \
  python-nautilus openssh adobe-source-code-pro-fonts powerline-fonts ttf-symbola ttf-nanum ttf-nanumgothic_coding \
  python-pip vundle htop plank paper-icon-theme-git materia-gtk-theme zsh-theme-powerlevel9k \
  zsh-history-search-multi-word-git alias-tips-git --noconfirm
@@ -54,6 +57,7 @@ yay -S libva-intel-driver libva-utils vulkan-intel vdpauinfo libvdpau-va-gl --no
 yay -S google-chrome chrome-gnome-shell slack-desktop \
  intellij-idea-ultimate-edition intellij-idea-ultimate-edition-jre clion clion-jre \
  mendeleydesktop wine-staging winetricks rustup deluge-git --noconfirm
+yay -S cmake gdb --asdep --noconfirm
 
 yay -S gnome-shell-extension-system-monitor-git gnome-shell-extension-workspaces-to-dock-git \
  gnome-shell-extension-topicons-plus-git gnome-shell-extension-no-topleft-hot-corner \
@@ -70,6 +74,7 @@ echo 'source /usr/share/zsh/plugins/alias-tips/alias-tips.plugin.zsh' >> ~/.zshr
 
 # for tilix
 tee -a ~/.zshrc > /dev/null << END
+
 if [ \$TILIX_ID ] || [ \$VTE_VERSION ]; then
 	source /etc/profile.d/vte.sh
 fi

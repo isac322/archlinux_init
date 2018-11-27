@@ -74,8 +74,8 @@ pacman -R vi --noconfirm
 ln -s /usr/bin/vim /usr/bin/vi
 
 
-pacman -S git bluez bluez-utils unrar pkgfile pigz sshfs most cmake linux-headers redshift \
- gdb ntfs-3g samba xorg-server xorg-xinit --noconfirm
+pacman -S git bluez bluez-utils unrar pkgfile pigz sshfs most linux-headers redshift \
+ ntfs-3g samba xorg-server xorg-xinit --noconfirm
 pkgfile --update
 
 # optimize makepkg
@@ -129,6 +129,13 @@ export QT_IM_MODULE=fcitx
 export XMODIFIERS=@im=fcitx
 END
 chmod +x /etc/X11/xinit/xinitrc.d/60-fctix.sh
+
+# enable auto connection of bluetooth
+tee /etc/pulse/default.pa > /dev/null << END
+# automatically switch to newly-connected devices
+load-module module-switch-on-connect
+END
+sed -E 's/^#?AutoEnable=(true|false)/AutoEnable=true/' /etc/bluetooth/main.conf
 
 systemctl enable NetworkManager
 systemctl enable gdm
