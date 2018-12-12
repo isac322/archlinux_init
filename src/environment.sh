@@ -94,7 +94,7 @@ printf 'enter your full driver name : '
 read driver
 
 pacman -S ${driver} --noconfirm
-if [ $? -ne 0 ]; then
+if [[ $? -ne 0 ]]; then
 	pacman -S xorg-drivers --noconfirm
 fi
 
@@ -108,12 +108,14 @@ END
 chmod +x /etc/X11/xinit/xinitrc.d/99-trackpoint-scroll.sh
 
 # install desktop
-pacman -S baobab eog eog-plugins evince gdm gnome-calculator gnome-control-center gnome-disk-utility gnome-font-viewer \
- gnome-keyring gnome-screenshot gnome-settings-daemon gnome-shell gnome-shell-extensions gnome-system-monitor \
- gucharmap gvfs gvfs-afc gvfs-goa gvfs-google gvfs-gphoto2 gvfs-mtp gvfs-nfs gvfs-smb mousetweaks nautilus \
- networkmanager totem gst-libav vino xdg-user-dirs-gtk cheese dconf-editor file-roller gedit gnome-logs gnome-mines \
- gnome-sound-recorder gnome-tweak-tool gnome-video-effects seahorse vinagre gparted meld ttf-ubuntu-font-family \
- gst-plugins-ugly fcitx-configtool fcitx-hangul fcitx-gtk3 xorg-xinput --noconfirm
+pacman -S baobab cheese eog evince file-roller gdm gedit gnome-calculator gnome-characters gnome-control-center \
+  gnome-disk-utility gnome-font-viewer gnome-keyring gnome-logs gnome-screenshot gnome-shell gnome-shell-extensions \
+  gnome-system-monitor gnome-video-effects gvfs gvfs-afc gvfs-goa gvfs-google gvfs-gphoto2 gvfs-mtp gvfs-nfs gvfs-smb \
+  nautilus networkmanager totem vino xdg-user-dirs-gtk xorg-xinput --noconfirm
+
+pacman -S dconf-editor ghex eog-plugins gnome-sound-recorder gnome-tweak-tool \
+  fcitx-configtool fcitx-gtk3 fcitx-hangul gnome-mines gparted gst-libav gst-plugins-ugly gucharmap meld seahorse \
+  ttf-ubuntu-font-family vinagre --noconfirm
 
 
 # for printer support

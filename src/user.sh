@@ -6,8 +6,8 @@ timedatectl set-ntp true
 curl -fsSL https://raw.githubusercontent.com/robbyrussell/oh-my-zsh/master/tools/install.sh | sh
 
 # set oh-my-zsh plugins
-sed -Ei -e 's/ZSH_THEME="[^"]+"/ZSH_THEME="powerlevel9k/powerlevel9k"/' ~/.zshrc
-perl -i -0777 -pe 's/plugins=\(\n.+\n\)/plugins=(git npm jsontools sudo docker pip python archlinux virtualenv)/g' ~/.zshrc
+sed -Ei -e 's/ZSH_THEME="[^"]+"/ZSH_THEME="powerlevel9k\/powerlevel9k"/' ~/.zshrc
+perl -i -0777 -pe 's/plugins=\(\n.+\n\)/plugins=(git npm jsontools sudo docker pip python archlinux virtualenv systemd)/g' ~/.zshrc
 
 
 # install yay
@@ -36,16 +36,17 @@ sudo systemctl enable pcscd.service
 
 
 tmp_size=`df --output=avail /tmp | tail -1`
-if [ ${tmp_size} -lt 4194304 ]; then
+if [[ ${tmp_size} -lt 4194304 ]]; then
 	sudo mount -o remount,size=4G /tmp
 fi
 
 
 # install packages
-yay -S jdk zsh-completions zsh-autosuggestions zsh-fast-syntax-highlighting-git tilix exfat-dkms-git \
- python-nautilus openssh adobe-source-code-pro-fonts powerline-fonts ttf-symbola ttf-nanum ttf-nanumgothic_coding \
- python-pip vundle htop plank paper-icon-theme-git materia-gtk-theme zsh-theme-powerlevel9k \
- zsh-history-search-multi-word-git alias-tips-git --noconfirm
+yay -S jdk \
+ zsh-completions zsh-autosuggestions zsh-fast-syntax-highlighting-git zsh-theme-powerlevel9k zsh-history-search-multi-word-git alias-tips-git \
+ tilix exfat-dkms-git python-nautilus openssh \
+ adobe-source-code-pro-fonts powerline-fonts ttf-symbola ttf-nanum ttf-nanumgothic_coding \
+ python-pip vundle htop plank paper-icon-theme-git materia-gtk-theme --noconfirm
 
 # link powerlevel9k theme to oh-my-zsh
 ln -s /usr/share/zsh-theme-powerlevel9k ~/.oh-my-zsh/custom/themes/powerlevel9k
@@ -56,7 +57,7 @@ yay -S libva-intel-driver libva-utils vulkan-intel vdpauinfo libvdpau-va-gl --no
 
 yay -S google-chrome chrome-gnome-shell slack-desktop \
  intellij-idea-ultimate-edition intellij-idea-ultimate-edition-jre clion clion-jre \
- mendeleydesktop wine-staging winetricks rustup deluge-git vmware-workstation --noconfirm
+ mendeleydesktop wine-staging winetricks rustup deluge-python3-git vmware-workstation --noconfirm
 yay -S cmake gdb --asdep --noconfirm
 
 yay -S gnome-shell-extension-system-monitor-git gnome-shell-extension-workspaces-to-dock-git \
