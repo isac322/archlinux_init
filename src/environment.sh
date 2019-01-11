@@ -5,6 +5,14 @@ print_sep() {
 }
 
 sed -Ei "s/#?\s*MAKEFLAGS=.+/MAKEFLAGS=\"-j$(nproc)\"/" /etc/makepkg.conf
+
+
+# optimize makepkg
+sed -Ei "s/PKGEXT=.+/PKGEXT='.pkg.tar'/" /etc/makepkg.conf
+sed -Ei "s/COMPRESSXZ\s*=\s*\((.+)\)/COMPRESSXZ=(\1 --threads=0)/" /etc/makepkg.conf
+pacman -S pigz --noconfirm
+sed -Ei "s/COMPRESSGZ\s*=\s*\(\s*(\S+)\s+([^)]+)\)/COMPRESSGZ=(pigz \2)/" /etc/makepkg.conf
+
 timedatectl set-ntp true
 
 echo "$HOST_NAME" > /etc/hostname
@@ -74,14 +82,10 @@ pacman -R vi --noconfirm
 ln -s /usr/bin/vim /usr/bin/vi
 
 
-pacman -S git bluez bluez-utils unrar pkgfile pigz sshfs most linux-headers redshift \
+pacman -S git bluez bluez-utils unrar pkgfile sshfs most linux-headers redshift \
  ntfs-3g samba xorg-server xorg-xinit --noconfirm
 pkgfile --update
 
-# optimize makepkg
-sed -Ei "s/PKGEXT=.+/PKGEXT='.pkg.tar'/" /etc/makepkg.conf
-sed -Ei "s/COMPRESSGZ\s*=\s*\(\s*(\S+)\s+([^)]+)\)/COMPRESSGZ=(pigz \2)/" /etc/makepkg.conf
-sed -Ei "s/COMPRESSXZ\s*=\s*\((.+)\)/COMPRESSXZ=(\1 --threads=0)/" /etc/makepkg.conf
 
 # install xorg graphic driver
 print_sep

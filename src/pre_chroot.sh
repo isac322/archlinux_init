@@ -3,12 +3,11 @@
 pacman -Sy pacman-contrib --noconfirm
 
 # Select appropriate server
-curl -fsSLo mirrorlist https://www.archlinux.org/mirrorlist/\?country\=KR
-sed -i 's/^#\W*Server/Server/' mirrorlist
-rankmirrors mirrorlist > /etc/pacman.d/mirrorlist
-rm mirrorlist
+curl -s "https://www.archlinux.org/mirrorlist/?country=KR&country=US&protocol=http&protocol=https&ip_version=4&use_mirror_status=on" \
+ | sed -e 's/^#Server/Server/' -e '/^#/d' \
+ | rankmirrors -n 15 - > /etc/pacman.d/mirrorlist
 
 
-pacstrap ${MOUNT_POINT} base base-devel zsh vim
+pacstrap ${MOUNT_POINT} base base-devel zsh vim pacman-contrib
 
 genfstab -U -p ${MOUNT_POINT} >> ${MOUNT_POINT}/etc/fstab
