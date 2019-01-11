@@ -15,7 +15,7 @@ ln -sf /usr/share/zoneinfo/Asia/Seoul /etc/localtime
 locales=('en_US.UTF-8' 'ko_KR.UTF-8')
 
 for locale in ${locales[@]}; do
-	sed -ri "s/#(${locale}.*)/\1/" /etc/locale.gen
+	sed -Ei "s/#(${locale}.*)/\1/" /etc/locale.gen
 done
 echo 'LANG=ko_KR.UTF-8' > /etc/locale.conf
 locale-gen
@@ -26,7 +26,7 @@ perl -i -0777 -pe 's/#\s*\[multilib\]\n#\s*(.+)/[multilib]\n\1/g' /etc/pacman.co
 pacman -Syu
 
 # colorize pacman
-sed -Ei -e 's/#Color/Color/' /etc/pacman.conf
+sed -Ei 's/#Color/Color/' /etc/pacman.conf
 
 
 chsh -s `which zsh`
