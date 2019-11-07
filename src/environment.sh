@@ -1,5 +1,7 @@
 #!/usr/bin/env bash
 
+set -ex
+
 print_sep() {
 	echo '#####################################################################################################################'
 }
@@ -22,7 +24,7 @@ ln -sf /usr/share/zoneinfo/Asia/Seoul /etc/localtime
 # Select appropriate locale
 locales=('en_US.UTF-8' 'ko_KR.UTF-8')
 
-for locale in ${locales[@]}; do
+for locale in "${locales[@]}"; do
 	sed -Ei "s/#(${locale}.*)/\1/" /etc/locale.gen
 done
 echo 'LANG=ko_KR.UTF-8' > /etc/locale.conf
@@ -31,13 +33,13 @@ locale-gen
 
 # enable multilib
 perl -i -0777 -pe 's/#\s*\[multilib\]\n#\s*(.+)/[multilib]\n\1/g' /etc/pacman.conf
-pacman -Syu
+pacman -Syu --noconfirm
 
 # colorize pacman
 sed -Ei 's/#Color/Color/' /etc/pacman.conf
 
 
-chsh -s `which zsh`
+chsh -s "$(command -v zsh)"
 print_sep
 echo 'setting password of root'
 passwd
@@ -67,12 +69,12 @@ menuentry "Firmware setup" {
 }
 END
 # add resume point to swap partition
-SWAP_UUID=`blkid ${SWAP_PARTITION} | sed -E 's/.*\s+UUID="([^"]+)".*/\1/'`
+SWAP_UUID=$(blkid "${SWAP_PARTITION}" | sed -E 's/.*\s+UUID="([^"]+)".*/\1/')
 sed -Ei "s/GRUB_CMDLINE_LINUX_DEFAULT=\"(.+)\"/GRUB_CMDLINE_LINUX_DEFAULT=\"\1 resume=UUID=${SWAP_UUID}\"/" /etc/default/grub
 grub-mkconfig -o /boot/grub/grub.cfg
 
 
-useradd -m -g users -G storage,power,wheel -s /bin/zsh ${USER_NAME}
+useradd -m -G storage,power,wheel -s "$(command -v zsh)" "${USER_NAME}"
 sed -Ei 's/#\s+%wheel\s+ALL=\(ALL\)\s+ALL/%wheel ALL=(ALL) ALL/' /etc/sudoers
 print_sep
 echo "setting password of ${USER_NAME}"
@@ -84,7 +86,7 @@ ln -s /usr/bin/vim /usr/bin/vi
 
 pacman -S git bluez bluez-utils unrar pkgfile sshfs most linux-headers redshift \
  ntfs-3g samba xorg-server xorg-xinit --noconfirm
-pkgfile --update
+systemctl enable pkgfile-update.timer --now
 
 
 # install xorg graphic driver
@@ -97,8 +99,7 @@ print_sep
 printf 'enter your full driver name : '
 read driver
 
-pacman -S ${driver} --noconfirm
-if [[ $? -ne 0 ]]; then
+if pacman -S "${driver}" --noconfirm; then
 	pacman -S xorg-drivers --noconfirm
 fi
 
@@ -115,11 +116,11 @@ chmod +x /etc/X11/xinit/xinitrc.d/99-trackpoint-scroll.sh
 pacman -S baobab cheese eog evince file-roller gdm gedit gnome-calculator gnome-characters gnome-control-center \
   gnome-disk-utility gnome-font-viewer gnome-keyring gnome-logs gnome-screenshot gnome-shell gnome-shell-extensions \
   gnome-system-monitor gnome-video-effects gvfs gvfs-afc gvfs-goa gvfs-google gvfs-gphoto2 gvfs-mtp gvfs-nfs gvfs-smb \
-  nautilus networkmanager totem vino xdg-user-dirs-gtk xorg-xinput --noconfirm
+  nautilus networkmanager vino xdg-user-dirs-gtk xorg-xinput --noconfirm
 
 pacman -S dconf-editor ghex eog-plugins gnome-sound-recorder gnome-tweak-tool \
   fcitx-configtool fcitx-gtk3 fcitx-hangul gnome-mines gparted gst-libav gst-plugins-ugly gucharmap meld seahorse \
-  ttf-ubuntu-font-family vinagre --noconfirm
+  ttf-ubuntu-font-family vinagre mpv --noconfirm
 
 
 # for printer support

@@ -1,5 +1,7 @@
 #!/usr/bin/env bash
 
+set -ex
+
 timedatectl set-ntp true
 
 # install oh-my-zsh
@@ -13,29 +15,29 @@ perl -i -0777 -pe 's/plugins=\(\n.+\n\)/plugins=(git npm jsontools sudo docker p
 # install yay
 git clone https://aur.archlinux.org/yay.git
 cd yay
-makepkg -fsri --noconfirm
+makepkg -cirs --noconfirm
 cd ..
 rm -rf yay
 
 echo 'export VISUAL="vim"' >> ~/.zshrc
 
 # for touchpad gesture
-yay -S libinput-gestures --noconfirm
+yay -S libinput-gestures --noconfirm --removemake
 libinput-gestures-setup autostart
 libinput-gestures-setup start
-sudo gpasswd -a ${USER_NAME} input
+sudo gpasswd -a "${USER_NAME}" input
 
 # for fingerprint
-# yay -S fingerprint-gui --noconfirm
+# yay -S fingerprint-gui --noconfirm --removemake
 
 # for SmartCardReader (run pcsc_scan for test)
-yay -S ccid opensc pcsc-tools --noconfirm
+yay -S ccid opensc pcsc-tools --noconfirm --removemake
 # auto start SmartCardReader service
 sudo systemctl enable pcscd.service
 
 
 
-tmp_size=`df --output=avail /tmp | tail -1`
+tmp_size=$(df --output=avail /tmp | tail -1)
 if [[ ${tmp_size} -lt 4194304 ]]; then
 	sudo mount -o remount,size=4G /tmp
 fi
@@ -46,23 +48,23 @@ yay -S jdk \
  zsh-completions zsh-autosuggestions zsh-fast-syntax-highlighting-git zsh-theme-powerlevel9k zsh-history-search-multi-word-git alias-tips-git \
  tilix exfat-dkms-git python-nautilus openssh \
  adobe-source-code-pro-fonts powerline-fonts ttf-symbola ttf-nanum ttf-nanumgothic_coding \
- python-pip vundle htop plank paper-icon-theme-git materia-gtk-theme --noconfirm
+ python-pip vundle htop plank paper-icon-theme-git materia-gtk-theme --noconfirm --removemake
 
 # link powerlevel9k theme to oh-my-zsh
 ln -s /usr/share/zsh-theme-powerlevel9k ~/.oh-my-zsh/custom/themes/powerlevel9k
 
 # for hardware acceleration
-yay -S libva-intel-driver libva-utils vulkan-intel vdpauinfo libvdpau-va-gl --noconfirm
+yay -S intel-media-driver libva-utils vulkan-intel vdpauinfo libvdpau-va-gl --noconfirm --removemake
 
 
-yay -S google-chrome chrome-gnome-shell slack-desktop \
+yay -S chromium-vaapi-bin chrome-gnome-shell slack-desktop mpv-mpris \
  intellij-idea-ultimate-edition intellij-idea-ultimate-edition-jre clion clion-jre \
- mendeleydesktop wine-staging winetricks rustup deluge-python3-git vmware-workstation --noconfirm
-yay -S cmake gdb --asdep --noconfirm
+ mendeleydesktop wine-staging winetricks rustup deluge-python3-git vmware-workstation --noconfirm --removemake
+yay -S cmake gdb chromium-widevine pepper-flash --asdep --noconfirm --removemake
 
 yay -S gnome-shell-extension-system-monitor-git gnome-shell-extension-workspaces-to-dock-git \
  gnome-shell-extension-topicons-plus-git gnome-shell-extension-no-topleft-hot-corner \
- gnome-shell-extension-dynamic-top-bar-git gnome-shell-extension-autohide-battery-git --noconfirm
+ gnome-shell-extension-dynamic-top-bar-git gnome-shell-extension-autohide-battery-git --noconfirm --removemake
 
 
 # for zsh plugins
@@ -83,7 +85,7 @@ END
 
 
 # remove unused packages
-yay -Rsn `yay -Qdtq` --noconfirm
+yay -Rsn "$(yay -Qdtq)" --noconfirm --removemake
 
 
 mkdir ~/.config/autostart/ -p

@@ -1,5 +1,7 @@
 #!/usr/bin/env sh
 
+set -ex
+
 HOST_NAME='bhyoo-laptop'
 USER_NAME='bhyoo'
 MOUNT_POINT='/mnt'
@@ -9,10 +11,10 @@ ROOT_PARTITION='/dev/sda2'
 HOME_PARTITION='/dev/sda3'
 SWAP_PARTITION='/dev/sda4'
 
-SCRIPT=`readlink -f "$0"`
-BASEDIR=`dirname "$SCRIPT"`
+SCRIPT=$(readlink -f "$0")
+BASEDIR=$(dirname "$SCRIPT")
 
-echo ${BASEDIR}
+echo "${BASEDIR}"
 
 . "$BASEDIR"/partition.sh
 . "$BASEDIR"/pre_chroot.sh
