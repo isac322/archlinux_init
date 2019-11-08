@@ -53,12 +53,12 @@ yay -S intel-media-driver libva-utils vulkan-intel vdpauinfo libvdpau-va-gl --no
 
 yay -S chromium-vaapi-bin chrome-gnome-shell slack-desktop mpv-mpris \
   intellij-idea-ultimate-edition intellij-idea-ultimate-edition-jre clion clion-jre \
-  mendeleydesktop wine-staging winetricks rustup deluge-python3-git vmware-workstation --noconfirm --removemake
+  wine-staging winetricks rustup deluge vmware-workstation --noconfirm --removemake
 yay -S cmake gdb chromium-widevine pepper-flash --asdep --noconfirm --removemake
 
-yay -S gnome-shell-extension-system-monitor-git gnome-shell-extension-workspaces-to-dock-git \
+yay -S gnome-shell-extension-system-monitor-git gnome-shell-extension-workspaces-to-dock \
   gnome-shell-extension-topicons-plus-git gnome-shell-extension-no-topleft-hot-corner \
-  gnome-shell-extension-dynamic-top-bar-git gnome-shell-extension-autohide-battery-git --noconfirm --removemake
+  gnome-shell-extension-dynamic-top-bar-git gnome-shell-extension-autohide-battery --noconfirm --removemake
 
 # for zsh plugins
 {
