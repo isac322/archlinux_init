@@ -60,18 +60,15 @@ yay -S gnome-shell-extension-system-monitor-git gnome-shell-extension-workspaces
   gnome-shell-extension-topicons-plus-git gnome-shell-extension-no-topleft-hot-corner \
   gnome-shell-extension-dynamic-top-bar-git gnome-shell-extension-autohide-battery --noconfirm --removemake
 
-# for zsh plugins
-{
-  echo ''
-  echo 'source /usr/share/zsh/plugins/zsh-autosuggestions/zsh-autosuggestions.zsh'
-  echo 'source /usr/share/zsh/plugins/fast-syntax-highlighting/fast-syntax-highlighting.plugin.zsh'
-  echo 'source /usr/share/zsh/plugins/history-search-multi-word/history-search-multi-word.plugin.zsh'
-  echo 'source /usr/share/zsh/plugins/zsh-you-should-use/you-should-use.plugin.zsh'
-} >> ~/.zshrc
-
-# for tilix
 tee -a ~/.zshrc > /dev/null << END
 
+# for zsh plugins
+source /usr/share/zsh/plugins/zsh-autosuggestions/zsh-autosuggestions.zsh
+source /usr/share/zsh/plugins/fast-syntax-highlighting/fast-syntax-highlighting.plugin.zsh
+source /usr/share/zsh/plugins/history-search-multi-word/history-search-multi-word.plugin.zsh
+source /usr/share/zsh/plugins/zsh-you-should-use/you-should-use.plugin.zsh
+
+# for tilix
 if [ \$TILIX_ID ] || [ \$VTE_VERSION ]; then
 	source /etc/profile.d/vte.sh
 fi
