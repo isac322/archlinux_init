@@ -112,7 +112,7 @@ pacman -S baobab cheese eog evince file-roller gdm gedit gnome-calculator gnome-
 
 pacman -S dconf-editor ghex eog-plugins gnome-sound-recorder gnome-tweak-tool \
   fcitx-configtool fcitx-gtk3 fcitx-hangul gnome-mines gparted gst-libav gst-plugins-ugly gucharmap meld seahorse \
-  ttf-ubuntu-font-family vinagre mpv --noconfirm
+  ttf-ubuntu-font-family vinagre mpv docker --noconfirm
 
 # for printer support
 pacman -S cups system-config-printer --noconfirm

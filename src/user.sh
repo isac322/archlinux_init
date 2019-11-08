@@ -83,6 +83,15 @@ END
 # remove unused packages
 yay -Rsn "$(yay -Qdtq)" --noconfirm --removemake
 
+mkdir -p /home/"${USER_NAME}"/program/docker
+
+tee /etc/docker/daemon.json > /dev/null << END
+{
+    "graph": "/home/${USER_NAME}/program/docker",
+    "hosts": ["tcp://0.0.0.0:2375", "fd://"]
+}
+END
+
 mkdir ~/.config/autostart/ -p
 
 # ready for next boot
