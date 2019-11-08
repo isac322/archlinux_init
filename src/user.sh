@@ -45,7 +45,7 @@ fi
 yay -S jdk \
   zsh-completions zsh-autosuggestions zsh-fast-syntax-highlighting-git zsh-theme-powerlevel9k zsh-history-search-multi-word-git zsh-you-should-use \
   tilix exfat-dkms-git python-nautilus openssh \
-  adobe-source-code-pro-fonts powerline-fonts ttf-symbola ttf-nanum ttf-nanumgothic_coding \
+  adobe-source-code-pro-fonts ttf-fira-code powerline-fonts ttf-symbola ttf-nanum ttf-nanumgothic_coding \
   python-pip vundle htop plank paper-icon-theme-git materia-gtk-theme --noconfirm --removemake
 
 # for hardware acceleration
