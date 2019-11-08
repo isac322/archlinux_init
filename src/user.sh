@@ -25,7 +25,7 @@ yay -S oh-my-zsh-git --noconfirm --removemake
 cp /usr/share/oh-my-zsh/zshrc ~/.zshrc
 
 # set oh-my-zsh plugins
-sed -Ei -e 's/^(ZSH_THEME=.+)$/\1/' ~/.zshrc
+sed -Ei -e 's/^(ZSH_THEME=.+)$/#\1/' ~/.zshrc
 perl -i -0777 -pe 's/plugins=\(\n.+\n\)/plugins=(colored-man-pages colorize command-not-found extract sudo vundle docker git npm pip python virtualenv archlinux systemd bgnotify cargo common-aliases dircycle docker-compose jsontools rust ufw urltools)/g' ~/.zshrc
 
 # for fingerprint
@@ -43,9 +43,9 @@ fi
 
 # install packages
 yay -S jdk \
-  zsh-completions zsh-autosuggestions zsh-fast-syntax-highlighting-git zsh-theme-powerlevel9k zsh-history-search-multi-word-git zsh-you-should-use \
+  zsh-completions zsh-autosuggestions zsh-fast-syntax-highlighting-git zsh-theme-powerlevel10k-git zsh-history-search-multi-word-git zsh-you-should-use \
   tilix exfat-dkms-git python-nautilus openssh \
-  adobe-source-code-pro-fonts ttf-fira-code powerline-fonts ttf-symbola ttf-nanum ttf-nanumgothic_coding \
+  adobe-source-code-pro-fonts ttf-fira-code nerd-fonts-dejavu-complete ttf-symbola ttf-nanum ttf-nanumgothic_coding \
   python-pip vundle htop plank paper-icon-theme-git materia-gtk-theme --noconfirm --removemake
 
 # for hardware acceleration
@@ -54,11 +54,13 @@ yay -S intel-media-driver libva-utils vulkan-intel vdpauinfo libvdpau-va-gl --no
 yay -S chromium-vaapi-bin chrome-gnome-shell slack-desktop mpv-mpris \
   intellij-idea-ultimate-edition intellij-idea-ultimate-edition-jre clion clion-jre \
   wine-staging winetricks rustup deluge vmware-workstation --noconfirm --removemake
-yay -S cmake gdb chromium-widevine pepper-flash --asdep --noconfirm --removemake
+yay -S cmake gdb chromium-widevine pepper-flash --asdeps --noconfirm --removemake
 
 yay -S gnome-shell-extension-system-monitor-git gnome-shell-extension-workspaces-to-dock \
   gnome-shell-extension-topicons-plus-git gnome-shell-extension-no-topleft-hot-corner \
   gnome-shell-extension-dynamic-top-bar-git gnome-shell-extension-autohide-battery --noconfirm --removemake
+
+curl -o .p10k.zsh https://gist.githubusercontent.com/isac322/641c89f4db32c3f73dc8a3eb267417f3/raw/.p10k.zsh
 
 tee -a ~/.zshrc > /dev/null << END
 
@@ -67,11 +69,15 @@ source /usr/share/zsh/plugins/zsh-autosuggestions/zsh-autosuggestions.zsh
 source /usr/share/zsh/plugins/fast-syntax-highlighting/fast-syntax-highlighting.plugin.zsh
 source /usr/share/zsh/plugins/history-search-multi-word/history-search-multi-word.plugin.zsh
 source /usr/share/zsh/plugins/zsh-you-should-use/you-should-use.plugin.zsh
+source /usr/share/zsh-theme-powerlevel10k/powerlevel10k.zsh-theme
 
 # for tilix
 if [ \$TILIX_ID ] || [ \$VTE_VERSION ]; then
 	source /etc/profile.d/vte.sh
 fi
+
+# To customize prompt, run \`p10k configure\` or edit ~/.p10k.zsh.
+[[ ! -f ~/.p10k.zsh ]] || source ~/.p10k.zsh
 END
 
 # remove unused packages
