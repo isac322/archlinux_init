@@ -80,7 +80,7 @@ passwd "${USER_NAME}"
 
 pacman -S git bluez bluez-utils unrar pkgfile sshfs most linux-headers redshift \
   ntfs-3g samba xorg-server xorg-xinit --noconfirm
-systemctl enable pkgfile-update.timer --now
+systemctl enable pkgfile-update.timer
 
 # install xorg graphic driver
 print_sep
