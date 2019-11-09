@@ -46,7 +46,7 @@ passwd
 
 # for hibernate
 sed -Ei 's/HOOKS=(.+)udev(.+)/HOOKS=\1udev resume\2/' /etc/mkinitcpio.conf
-mkinitcpio -p
+mkinitcpio -P
 
 pacman -S grub efibootmgr os-prober intel-ucode --noconfirm
 grub-install --target=x86_64-efi --efi-directory=/boot/efi --bootloader-id=archlinux
