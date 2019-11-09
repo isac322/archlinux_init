@@ -2,8 +2,6 @@
 
 set -ex
 
-timedatectl set-ntp true
-
 # install yay
 git clone https://aur.archlinux.org/yay.git
 cd yay
