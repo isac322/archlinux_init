@@ -134,7 +134,7 @@ tee /etc/pulse/default.pa > /dev/null << END
 # automatically switch to newly-connected devices
 load-module module-switch-on-connect
 END
-sed -E 's/^#?AutoEnable=(true|false)/AutoEnable=true/' /etc/bluetooth/main.conf
+sed -i -E 's/^#?AutoEnable=(true|false)/AutoEnable=true/' /etc/bluetooth/main.conf
 
 systemctl enable NetworkManager
 systemctl enable gdm
