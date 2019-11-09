@@ -42,7 +42,7 @@ if [[ ${tmp_size} -lt 4194304 ]]; then
 fi
 
 # install packages
-yay -S jdk \
+yay -S jdk vi-vim-symlink \
   zsh-completions zsh-autosuggestions zsh-fast-syntax-highlighting-git zsh-theme-powerlevel10k-git zsh-history-search-multi-word-git zsh-you-should-use \
   tilix exfat-dkms-git python-nautilus openssh \
   adobe-source-code-pro-fonts ttf-fira-code nerd-fonts-dejavu-complete ttf-symbola ttf-nanum ttf-nanumgothic_coding \

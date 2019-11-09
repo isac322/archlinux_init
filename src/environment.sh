@@ -78,9 +78,6 @@ print_sep
 echo "setting password of ${USER_NAME}"
 passwd "${USER_NAME}"
 
-pacman -R vi --noconfirm
-ln -s /usr/bin/vim /usr/bin/vi
-
 pacman -S git bluez bluez-utils unrar pkgfile sshfs most linux-headers redshift \
   ntfs-3g samba xorg-server xorg-xinit --noconfirm
 systemctl enable pkgfile-update.timer --now
