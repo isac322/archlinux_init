@@ -9,14 +9,11 @@ print_sep() {
 sed -Ei "s/#?\s*MAKEFLAGS=.+/MAKEFLAGS=\"-j$(nproc)\"/" /etc/makepkg.conf
 
 # optimize makepkg
-sed -Ei "s/PKGEXT=.+/PKGEXT='.pkg.tar'/" /etc/makepkg.conf
+sed -Ei "s/^\s*(PKG|SRC)EXT\s*=\s*'(.+)\.(gz|xz)'\s*$/\1EXT='\2'/" /etc/makepkg.conf
 sed -Ei "s/COMPRESSXZ\s*=\s*\((.+)\)/COMPRESSXZ=(\1 --threads=0)/" /etc/makepkg.conf
 pacman -S pigz --noconfirm
 sed -Ei "s/COMPRESSGZ\s*=\s*\(\s*(\S+)\s+([^)]+)\)/COMPRESSGZ=(pigz \2)/" /etc/makepkg.conf
-
-timedatectl set-ntp true
-
-echo "$HOST_NAME" > /etc/hostname
+hwclock --systohc
 ln -sf /usr/share/zoneinfo/Asia/Seoul /etc/localtime
 
 # Select appropriate locale
@@ -27,6 +24,13 @@ for locale in "${locales[@]}"; do
 done
 echo 'LANG=ko_KR.UTF-8' > /etc/locale.conf
 locale-gen
+
+echo "$HOST_NAME" > /etc/hostname
+tee /etc/hosts > /dev/null << END
+127.0.0.1	localhost
+::1		localhost
+127.0.1.1	${HOST_NAME}.localdomain	${HOST_NAME}
+END
 
 # enable multilib
 perl -i -0777 -pe 's/#\s*\[multilib\]\n#\s*(.+)/[multilib]\n\1/g' /etc/pacman.conf
@@ -42,7 +46,7 @@ passwd
 
 # for hibernate
 sed -Ei 's/HOOKS=(.+)udev(.+)/HOOKS=\1udev resume\2/' /etc/mkinitcpio.conf
-mkinitcpio -p linux
+mkinitcpio -p
 
 pacman -S grub efibootmgr os-prober intel-ucode --noconfirm
 grub-install --target=x86_64-efi --efi-directory=/boot/efi --bootloader-id=archlinux

@@ -2,6 +2,7 @@
 
 set -ex
 
+timedatectl set-ntp true
 pacman -Sy pacman-contrib --noconfirm
 
 # Select appropriate server
@@ -9,6 +10,6 @@ curl -s "https://www.archlinux.org/mirrorlist/?country=KR&country=US&protocol=ht
   | sed -e 's/^#Server/Server/' -e '/^#/d' \
   | rankmirrors -n 15 - > /etc/pacman.d/mirrorlist
 
-pacstrap "${MOUNT_POINT}" base base-devel zsh vim pacman-contrib
+pacstrap "${MOUNT_POINT}" base base-devel linux linux-firmware zsh vim pacman-contrib
 
 genfstab -U -p "${MOUNT_POINT}" >> "${MOUNT_POINT}"/etc/fstab
