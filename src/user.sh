@@ -15,7 +15,7 @@ echo 'export VISUAL="vim"' >> ~/.zshrc
 yay -S libinput-gestures --noconfirm --removemake
 libinput-gestures-setup autostart
 libinput-gestures-setup start
-sudo gpasswd -a "${USER_NAME}" input
+sudo gpasswd -a "${USER}" input
 
 # install oh-my-zsh
 
@@ -81,11 +81,11 @@ END
 # remove unused packages
 yay -Rsn "$(yay -Qdtq)" --noconfirm --removemake
 
-mkdir -p /home/"${USER_NAME}"/program/docker
+mkdir -p /home/"${USER}"/program/docker
 
 tee /etc/docker/daemon.json > /dev/null << END
 {
-    "graph": "/home/${USER_NAME}/program/docker",
+    "graph": "/home/${USER}/program/docker",
     "hosts": ["tcp://0.0.0.0:2375", "fd://"]
 }
 END
