@@ -41,7 +41,7 @@ fi
 
 # install packages
 yay -S jdk vi-vim-symlink \
-  zsh-completions zsh-autosuggestions zsh-fast-syntax-highlighting-git zsh-theme-powerlevel10k-git zsh-history-search-multi-word-git zsh-you-should-use \
+  zsh-completions zsh-autosuggestions zsh-fast-syntax-highlighting-git zsh-theme-powerlevel10k-git zsh-history-search-multi-word-git alias-tips-git \
   tilix exfat-dkms-git python-nautilus openssh \
   adobe-source-code-pro-fonts ttf-fira-code nerd-fonts-dejavu-complete ttf-symbola ttf-nanum ttf-nanumgothic_coding \
   python-pip vundle htop plank paper-icon-theme-git materia-gtk-theme --noconfirm --removemake
@@ -66,7 +66,7 @@ tee -a ~/.zshrc > /dev/null << END
 source /usr/share/zsh/plugins/zsh-autosuggestions/zsh-autosuggestions.zsh
 source /usr/share/zsh/plugins/fast-syntax-highlighting/fast-syntax-highlighting.plugin.zsh
 source /usr/share/zsh/plugins/history-search-multi-word/history-search-multi-word.plugin.zsh
-source /usr/share/zsh/plugins/zsh-you-should-use/you-should-use.plugin.zsh
+source /usr/share/zsh/plugins/alias-tips/alias-tips.plugin.zsh
 source /usr/share/zsh-theme-powerlevel10k/powerlevel10k.zsh-theme
 
 # for tilix
