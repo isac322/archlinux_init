@@ -78,8 +78,8 @@ print_sep
 echo "setting password of ${USER_NAME}"
 passwd "${USER_NAME}"
 
-pacman -S git bluez bluez-utils unrar pkgfile sshfs most linux-headers redshift \
-  ntfs-3g samba xorg-server xorg-xinit --noconfirm
+pacman -S git bluez bluez-utils unrar pkgfile most linux-headers usbutils \
+  ntfs-3g samba xorg-server xorg-xinit net-tools tree --noconfirm
 systemctl enable pkgfile-update.timer
 
 # install xorg graphic driver
@@ -107,9 +107,10 @@ chmod +x /etc/X11/xinit/xinitrc.d/99-trackpoint-scroll.sh
 
 # install desktop
 pacman -S baobab cheese eog evince file-roller gdm gedit gnome-calculator gnome-characters gnome-control-center \
-  gnome-disk-utility gnome-font-viewer gnome-keyring gnome-logs gnome-screenshot gnome-shell gnome-shell-extensions \
-  gnome-system-monitor gnome-video-effects gvfs gvfs-afc gvfs-goa gvfs-google gvfs-gphoto2 gvfs-mtp gvfs-nfs gvfs-smb \
+  gnome-disk-utility gnome-font-viewer gnome-logs gnome-screenshot \
+  gnome-system-monitor gvfs gvfs-afc gvfs-goa gvfs-google gvfs-gphoto2 gvfs-mtp gvfs-nfs gvfs-smb \
   nautilus networkmanager vino xdg-user-dirs-gtk xorg-xinput --noconfirm
+pacman -S gnome-shell-extensions --noconfirm --asdeps
 
 pacman -S dconf-editor ghex eog-plugins gnome-sound-recorder gnome-tweak-tool \
   fcitx-configtool fcitx-gtk3 fcitx-hangul gnome-mines gparted gst-libav gst-plugins-ugly gucharmap meld seahorse \
